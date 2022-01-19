@@ -1,0 +1,172 @@
+.container{
+    border-left: 8px solid #3a8af6 !important;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    
+}
+
+.labelop{
+    font-size: 20px !important;
+}
+input[type=radio]{
+    display: none;
+}
+.label
+  {
+    position: absolute;
+    top: 22px;
+    right: 35px;
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      background-color: #3a8af6;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 1;
+  }
+  .label:before
+  {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      width: 26px;
+      height: 26px;
+      margin: 0 auto;
+      background-color: #fff;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      transition: 0.2s ease width, 0.2s ease height;
+  }
+  .label:active
+  {
+      transform: translateY(-50%) scale(0.9);
+  }
+  #tick_mark
+  {
+      position: absolute;
+      top: 0px;
+      /* right: 6px;
+      left: 0; */
+      width: 20px;
+      height: 20px;
+      margin: 0 auto;
+      margin-left: 4px;
+      transform: rotateZ(-50deg);
+  }
+  
+  #tick_mark:before, #tick_mark:after
+  {
+      content: "";
+      position: absolute;
+      background-color: #fff;
+      border-radius: 2px;
+      opacity: 0;
+  }
+  #tick_mark:before
+  {
+      left: 0;
+      bottom: 0;
+      width: 8px;
+      height: 12px;
+      transform: translateY(-28px)
+  }
+  
+  #tick_mark:after
+  {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 5px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.23);
+      transform: translateY(-40px)
+  }
+  
+ 
+  #_radio1:checked + .label
+  {
+      background-color: #07d410;
+  }
+  
+  #_radio1:checked + .label:before
+  {
+      width: 0;
+      height: 0;
+  }
+  
+  #_radio1:checked + .label #tick_mark:before, #_radio1:checked + .label #tick_mark:after
+  {
+      transform: translate(0);
+      opacity: 1;
+  }   
+  #_radio2:checked + .label
+  {
+      background-color: #07d410;
+  }
+  
+  #_radio2:checked + .label:before
+  {
+      width: 0;
+      height: 0;
+  }
+  
+  #_radio2:checked + .label #tick_mark:before, #_radio2:checked + .label #tick_mark:after
+  {
+      transform: translate(0);
+      opacity: 1;
+  } 
+  #_radio3:checked + .label
+  {
+      background-color: #07d410;
+  }
+  
+  #_radio3:checked + .label:before
+  {
+      width: 0;
+      height: 0;
+  }
+  
+  #_radio3:checked + .label #tick_mark:before, #_radio3:checked + .label #tick_mark:after
+  {
+      transform: translate(0);
+      opacity: 1;
+  }   
+  #_radio4:checked + .label
+  {
+      background-color: #07d410;
+  }
+  
+  #_radio4:checked + .label:before
+  {
+      width: 0;
+      height: 0;
+  }
+  
+  #_radio4:checked + .label #tick_mark:before, #_radio4:checked + .label #tick_mark:after
+  {
+      transform: translate(0);
+      opacity: 1;
+  }   
+   
+  input[type=text]{
+    font-size: 20px;
+    width: 100%;
+} 
+
+  @media only screen and (max-width: 600px) {
+     
+      ::ng-deep .modal-body{
+          padding: 5px;
+      } 
+      .labelop{
+        font-size: 14px !important;
+    }
+    input[type=text]{
+        font-size: 14px;
+        width: 100%;
+    } 
+  }
+ 

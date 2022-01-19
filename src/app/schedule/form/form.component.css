@@ -1,0 +1,106 @@
+.container{
+height: calc(100vh - 220px) !important;
+  overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.container::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  }
+  [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  .matCard{
+    margin-top: 85px;
+    padding-top: 25px;
+  }
+  /* custom styles */
+  mat-form-field{
+    width: 100%;
+    height: -15px;
+  }
+  
+  .bt{
+    text-align: center;
+  }
+ 
+  span{
+    margin-left: 65px;
+  }
+mat-button-toggle-group{
+  margin-block-end: -225px;
+  height: 40px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.my-form-field{
+  margin-bottom: -1.25em;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  mat-button-toggle-group{
+   margin-bottom: 25px;
+    height: 40px;
+  }
+  .time{
+    height: 15px;
+    margin-top: 5px;
+  }
+  ._text_color{
+    height: calc(100vh - 100px) !important;
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) and (max-width : 1440px) {
+  .cont{
+    height: 70vh;
+    overflow: scroll;
+   overflow-x: hidden;
+  }
+  
+} */
+
+  
+
+
+.classList{
+  display: inline-block;
+  width: auto;
+  height: auto;
+}
+
+.time{
+  height: 15px;
+  margin: 5px;
+  width: 8%;
+}

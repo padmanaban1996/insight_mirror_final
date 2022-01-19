@@ -1,0 +1,138 @@
+.summary{
+    background-color: lightyellow;
+    border-radius: 25px;
+    padding: 50px;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+      to left top,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.5)
+    );
+    border-radius: 1rem;
+    margin: 2rem 0rem;
+    padding: 2rem;
+    box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+    justify-content: space-between;
+  }
+  .question-paper{
+    width: 100%;
+    height: calc(100vh - 400px) !important;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+  .ranks{
+height: 320px;
+overflow: hidden;
+    overflow-y: scroll;
+  }
+  
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .button{
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+  }
+
+h4, .fa, p{
+    font-size: 26px;
+}
+.fa{
+    margin-right: 15px;
+}
+ol{
+  color: black;
+}
+.fa-check{
+  color: green;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.avatar-wrapper {
+  
+  height: 100px;
+  width: 100px;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 1px 1px 15px -5px black;
+  margin: 5px;
+  text-align: center;
+  line-height: 100px;
+}
+.charts{
+  display: flex;
+  flex-direction: row;
+}
+
+.avatar-wrapper .profile-pic {
+  height: 100%;
+  width: 100%;
+}
+.percentage{
+  position: absolute;
+  margin-bottom: 30px;
+  font-size: large;
+  color: black;
+  font-weight: bold;
+    }
+.average{
+      position: absolute;
+      
+  font-size: large;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 30px;
+    }
+   
+@media only screen and (max-width: 600px) {
+  .summary{
+      background-color: lightyellow;
+      border-radius: 25px;
+      padding: 20px;
+  }
+  .ranks{
+    height: 200px;
+    overflow: hidden;
+        overflow-y: scroll;
+      }
+  h4, .fa, p{
+      font-size: 16px;
+  }
+  .fa{
+      margin-right: 10px;
+  }
+  .card{
+      margin: 0.5rem;
+      padding: 1rem;
+  }
+  .charts{
+    display: flex;
+    flex-direction: column;
+  }
+  .percentage{
+    position: absolute;
+    margin-bottom: 35px;
+    font-size: large;
+    color: black;
+    font-weight: bold;
+      }
+  .average{
+        position: absolute;
+        
+    font-size: large;
+    color: black;
+    font-weight: bold;
+    margin-bottom: 35px;
+      }
+}

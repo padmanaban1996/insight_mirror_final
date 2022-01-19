@@ -1,0 +1,163 @@
+<div class="parent">
+    <div class="row error_msg_mobile">
+        <app-im-alert class="error_msg" type="danger"
+            *ngIf="(scheduleLength == 0) && (user.role == 'teacher' && quizLength == 0)">
+            {{scheduleError}}</app-im-alert>
+    </div>
+    <div class="child1">
+
+        <div class="_text_color schedule_heading">
+            <h1 class="schedule_title mb-1">{{schedulePageTitle}}</h1>
+        </div>
+        <div class="row _text_color schedule_buttons_row">
+            <div class="schedule_buttons ml-3">
+                <mat-button-toggle-group appearance="legacy" [(ngModel)]="type" name="status-type"
+                    aria-label="Font Style" class="_text_color">
+                    <mat-button-toggle value=1 class="_text_color" (change)="filterList()">{{matToggleLabel1}}
+                    </mat-button-toggle>
+                    <mat-button-toggle value=2 class="_text_color" (change)="filterList()">{{matToggleLabel2}}
+                    </mat-button-toggle>
+                    <mat-button-toggle value=3 class="_text_color" (change)="filterList()">{{matToggleLabel3}}
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div>
+                <a *ngIf="user.role == 'teacher'" (click)="openAddNewSchedule()" class="float">
+                    <i class="fa fa-plus my-float"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-end _text_color mt-3">
+            <div class="col-md-4" *ngIf="role == 'admin'">
+                <ng-select [(items)]="allTeachersList" (change)="filterList()" class="customSelect"
+                    placeholder="{{teacherFilterPlaceholder}}" [selectableGroup]="true" bindLabel="name" bindValue="_id"
+                    [closeOnSelect]="true" appendTo="body" [(ngModel)]="teacherSelected"
+                    [ngModelOptions]="{standalone: true}">
+                </ng-select>
+            </div>
+            <!-- <div class="col-md-4">
+                <div class="search-wrapper">
+                    <input autocomplete="off" class="search-input" type="text" placeholder="Search"
+                        (keyup)="updateFilter($event)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
+                        viewBox="0 0 24 24">
+                        <defs></defs>
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="M21 21l-4.35-4.35"></path>
+                    </svg>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="child2">
+        <mat-spinner *ngIf="loading == true && scheduleLength == null" [diameter]="50" class="loading">
+        </mat-spinner>
+        <div class="row py-1">
+            <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 d-flex cols"
+                *ngFor="let schedule of filteredScheduleList; let i=index" #table>
+                <div class="card p-4 flex-fill">
+                    <div class="bg-circle" style="background: #3a8af6;"></div>
+                    <div class="row">
+
+                        <div class="col text-center">
+                            <h2 class="m-0">{{schedule.subject}}</h2>
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Maths'"
+                                src="/assets/subjects/Mathematics.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Chemistry'"
+                                src="/assets/subjects/Chemistry.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Physics'"
+                                src="/assets/subjects/Physics.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Biology'"
+                                src="/assets/subjects/Biology.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Geography'"
+                                src="/assets/subjects/Geography.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'Computer'"
+                                src="/assets/subjects/Computer.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'History'"
+                                src="/assets/subjects/History.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == 'English'"
+                                src="/assets/subjects/English.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="schedule.subject == null"
+                                src="/assets/subjects/Language.svg">
+                        </div>
+                        <div class="col align-self-center text-white text-center content">
+                            <h2>{{schedule.name | titlecase}}</h2>
+
+                            <h3>{{scheduleTimeLabel}} :</h3>
+                            <div>
+                                <span>From -</span>
+                                <span class="ml-1"> {{schedule.starts_at | date : 'h:mm a'}}</span>
+                            </div>
+                            <div>
+                                <span>To -</span>
+                                <span class="ml-1"> {{schedule.ends_at | date : 'h:mm a'}}</span>
+                            </div>
+                            <div class="d-flex justify-content-center py-2">
+                                <button class="btn"
+                                    *ngIf="(schedule.session_started == true && schedule.sesssion_ended == false)"
+                                    (click)="startClass(schedule)">{{Joinclass}}</button>
+                                <button class="btn" (click)="open(schedule)"
+                                    *ngIf="(role == 'admin'  || role == 'teacher')&& (schedule.sesssion_ended == true && schedule.session_started == true)">
+                                    {{summary}}</button>
+                                <button class="save-changes btn"
+                                    *ngIf="(role == 'student'  || role == 'admin') && (schedule.session_started == false)"
+                                    [disabled]="schedule.session_started == false">
+                                    {{Joinclass}}</button>
+                                <button *ngIf="role == 'teacher' && schedule.host_joined !== true" class="btn"
+                                    (click)="startClass(schedule)">{{start}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row py-1">
+            <div class="col-md-4 col-sm-12 col-lg-4 col-xl-4 d-flex cols"
+                *ngFor="let quiz of filteredQuizList; let i=index" #table>
+                <div class="card p-4 flex-fill" *ngIf="quiz.scheduled == true">
+                    <div class="bg-circle" style="background: #3a8af6;"></div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <h2 class="m-0">{{quiz.subject}}</h2>
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Maths'"
+                                src="/assets/subjects/Mathematics.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Chemistry'"
+                                src="/assets/subjects/Chemistry.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Physics'"
+                                src="/assets/subjects/Physics.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Biology'"
+                                src="/assets/subjects/Biology.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Geography'"
+                                src="/assets/subjects/Geography.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'Computer'"
+                                src="/assets/subjects/Computer.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'History'"
+                                src="/assets/subjects/History.svg">
+                            <img class="img-fluid d-block mx-auto" width="200" *ngIf="quiz.subject == 'English'"
+                                src="/assets/subjects/English.svg">
+                            <img class="img-fluid d-block mx-auto" width="200"
+                                *ngIf="quiz.subject == null || quiz.subject == undefined || quiz.subject == ''"
+                                src="/assets/subjects/Language.svg">
+                        </div>
+                        <div class="col align-self-center text-white text-center">
+                            <h2>{{quiz.name | titlecase}}</h2>
+                            <div class="d-flex justify-content-center py-2" *ngIf="user.role ==='student'">
+                                <button class="btn" (click)="openQuizResults(quiz)"
+                                    *ngIf="quiz.participant[0].attended === true">
+                                    {{summary}}</button>
+                                <button class="save-changes btn" (click)="startQuiztoStudent(quiz)"
+                                    *ngIf="quiz.participant[0].attended === false">
+                                    Join Quiz</button>
+                            </div>
+                            <div class="d-flex justify-content-center py-2" *ngIf="user.role ==='teacher'">
+                                <button class="btn" (click)="openQuizResults(quiz)">
+                                    {{summary}}</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

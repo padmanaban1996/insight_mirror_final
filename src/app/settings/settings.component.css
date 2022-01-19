@@ -1,0 +1,37 @@
+.sub-menu {
+    background-color: bisque;
+    width: 10%;
+    height: 100%;
+}
+
+
+/* Styles for tab labels */
+.mat-tab-label {
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: transparent;
+  }
+  
+  
+  .mat-tab-nav-bar{
+    z-index:0!important;
+  }
+  nav{
+    z-index: 0!important;
+  }
+  :host ::ng-deep .mat-tab-header {
+    position: fixed!important;
+  }
+  :host ::ng-deep .mat-tab-body-wrapper {
+    position: fixed!important;
+  }
+
+  @media only screen and  (max-width : 600px){
+  .mat-tab-header-pagination-after .mat-tab-header-pagination-chevron , .mat-tab-header-pagination-before .mat-tab-header-pagination-chevron{
+  background-color: white;
+  } 
+  .mat-tab-link:last-child{
+    display: none!important;
+  }
+}
+  

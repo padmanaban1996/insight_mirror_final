@@ -1,0 +1,24 @@
+table { border-collapse: separate; }
+th:first-child{ border-top-left-radius: 10px; }
+th:last-child{  border-top-right-radius: 10px;}
+tr:first-child td:first-child { border-top-left-radius: 0px; }
+tr:first-child td:last-child { border-top-right-radius: 0px; }
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+table.dataTable thead tr {
+  background-color: #3a8af6; 
+}
+tr{
+  cursor: pointer;
+}
+tr:nth-child(even) {
+  background-color: #92bbf9;
+  color: white;
+}
+::ng-deep div.dataTables_wrapper div.dataTables_info {
+  padding-top: 15px!important;
+  margin-left: 5px !important;
+}
+::ng-deepdiv .dataTables_wrapper div.dataTables_filter {
+  margin-right: 15px !important;
+}

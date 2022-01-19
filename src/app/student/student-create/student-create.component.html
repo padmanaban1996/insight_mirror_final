@@ -1,0 +1,81 @@
+<div class="main-div _text_color">
+
+  <form [formGroup]="studentcreateform">
+
+    <h1 style="text-align: center;">{{studentCreateTitle}}</h1>
+
+    <div *ngIf="f.confirm_password.invalid
+    && f.confirm_password.errors.confirmedValidator" class="alert alert-danger">{{pwdConfirmError}}</div>
+    <div
+      *ngIf="(f.email.invalid && f.email.errors.pattern) ||(s.parent_email_id.invalid && s.parent_email_id.errors.pattern)"
+      class="alert alert-danger">{{emailError}}</div>
+
+
+    <div class="form-group col-sm-12">
+
+      <label for="name" class="control-label required">{{studentNameLabel}}</label>
+      <input type="text" id="name" class="form-control" formControlName="name" required appCheckFormFieldValidity>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="email" class="control-label required">{{studentEmailLabel}}</label>
+        <input type="email" id="email" class="form-control" formControlName="email" required appCheckFormFieldValidity>
+
+      </div>
+    </div>
+    <div class="form-group col-sm-12">
+      <label for="text" class="control-label required">{{studentPasswordLabel}}</label>
+      <mat-icon class="placeholder" (click)="passwordEye()" class="input_img">
+        {{p_hide ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+      <input type="password" id="text" class="form-control" formControlName="password"
+        [type]="p_hide ? 'password' : 'text'" required appCheckFormFieldValidity>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="password" class="control-label required">{{studentCPasswordLabel}}</label>
+        <mat-icon class="placeholder" (click)="confirmpasswordEye()" class="input_img_confirm">
+          {{cp_hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+        <input type="password" id="password" class="form-control" formControlName="confirm_password"
+          [type]="cp_hide ? 'password' : 'text'" required appCheckFormFieldValidity>
+      </div>
+    </div>
+
+    <div formGroupName="_student">
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="number" class="control-label required">{{parentPhoneNumberLabel}}</label>
+          <input type="number" id="text" class="form-control" formControlName="parent_mobile_number" required
+            appCheckFormFieldValidity>
+        </div>
+      </div>
+      <div class="form-group">
+        <label style="margin-left: 13px; margin-bottom: 0px;" for="number"
+          class="control-label required">{{studentClassLabel}}</label>
+
+        <ng-select class="custom" style="margin: 15px;" [items]="classesList | async" bindLabel="name" bindValue="_id"
+          dropdownPosition="auto" [virtualScroll]="true" placeholder="click to select the class"
+          [selectableGroup]="true" [closeOnSelect]="false" appendTo="body" [(ngModel)]="classSelected"
+          [ngModelOptions]="{standalone: true}">
+        </ng-select>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="email" class="control-label required">{{parentEmailLabel}}</label>
+          <input type="email" id="email" class="form-control" formControlName="parent_email_id" required
+            appCheckFormFieldValidity>
+        </div>
+      </div>
+    </div>
+    <div class="bt">
+      <button class="btn" (click)="onSubmit()"
+        [disabled]="studentcreateform.invalid || flag">{{studentSubmitButton}}</button>
+
+    </div>
+  </form>
+
+</div>

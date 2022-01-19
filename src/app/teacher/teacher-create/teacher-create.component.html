@@ -1,0 +1,95 @@
+<div class="main-div  _text_color">
+
+  <form [formGroup]="teachercreateform">
+    <h1 style="text-align: center;">{{teacherCreateTitle}}</h1>
+
+    <div *ngIf="f.confirm_password.invalid
+    && f.confirm_password.errors.confirmedValidator" class="alert alert-danger">{{pwdConfirmError}}</div>
+    <div *ngIf="f.email.invalid && f.email.errors.pattern" class="alert alert-danger">{{emailError}}</div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="name" class="control-label required">{{teacherNameLabel}}</label>
+        <input type="text" id="name" class="form-control" formControlName="name" required appCheckFormFieldValidity>
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-12">
+        <label for="email" class="control-label required">{{teacherEmailLabel}}</label>
+
+        <input type="email" id="email" class="form-control" formControlName="email" required appCheckFormFieldValidity>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <mat-icon class="placeholder" (click)="passwordEye()" class="input_img">
+          {{p_hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+        <label for="password" class="control-label required">{{teacherPasswordLabel}}</label>
+        <input type="password" id="password" class="form-control" [type]="p_hide ? 'password' : 'text'"
+          formControlName="password" required appCheckFormFieldValidity>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <mat-icon class="placeholder" (click)="confirmpasswordEye()" class="input_img_confirm">
+          {{cp_hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+        <label for="text" class="control-label required">{{teacherCPasswordLabel}}</label>
+        <input type="password" id="text" class="form-control" [type]="cp_hide ? 'password' : 'text'"
+          formControlName="confirm_password" required appCheckFormFieldValidity>
+      </div>
+    </div>
+    <div formGroupName="_teacher">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="number" class="control-label required">{{teacherClassLabel}}</label>
+          <ng-select [items]="classesList " [multiple]="true" bindLabel="name" bindValue="_id"
+            placeholder="{{teacherClassesPlaceholder}}" [selectableGroup]="true" [closeOnSelect]="false" appendTo="body"
+            [(ngModel)]="classesSelected" [ngModelOptions]="{standalone: true}">
+          </ng-select>
+        </div>
+      </div>
+      <div class="form-group" style="margin: 15px;">
+        <input formControlName="is_class_teacher" [(ngModel)]="options" type="checkbox" />
+        <label for="number" class="control-label required m-1">{{classTeacherofLabel}}</label>
+      </div>
+      <div *ngIf="options" class="form-group">
+        <ng-select style="margin: 15px;" [items]="classTeacherRequired " bindLabel="name" bindValue="_id"
+          placeholder="click to select the class" [selectableGroup]="true" [closeOnSelect]="false" appendTo="body"
+          [(ngModel)]="classTeacherOfClassSelected" [ngModelOptions]="{standalone: true}">
+        </ng-select>
+      </div>
+      <!-- <div class="form-group">
+        <div class="col-sm-12">
+          <label for="number" class="control-label required">Subjects</label>
+          <ng-select [items]="subjectsList" placeholder="click to select the subjects" [selectableGroup]="true"
+            [closeOnSelect]="false" appendTo="body" [(ngModel)]="subjectsSelected"
+            [ngModelOptions]="{standalone: true}">
+          </ng-select>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="number" class="control-label required">{{subjectsLabel}}</label>
+          <ng-select [items]="subjects" placeholder="{{subjectsPlaceHolder}}" [closeOnSelect]="true" appendTo="body"
+            [(ngModel)]="subjectsSelected" [ngModelOptions]="{standalone: true}">
+          </ng-select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-12">
+          <label for="number" class="control-label required">{{teacherMobileNUmber}}</label>
+          <input type="number" id="number" class="form-control" formControlName="mobile_number" required
+            appCheckFormFieldValidity>
+        </div>
+      </div>
+    </div>
+
+    <div class="bt">
+      <button class="btn" (click)="onSubmit()"
+        [disabled]="teachercreateform.invalid || flag">{{teacherSubmitButton}}</button>
+    </div>
+  </form>
+</div>

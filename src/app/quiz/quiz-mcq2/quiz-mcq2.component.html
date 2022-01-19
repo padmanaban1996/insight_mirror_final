@@ -1,0 +1,43 @@
+<div class="container">
+  <form [formGroup]="newQuestionForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="row mt-3">
+      <div class="col">
+        <mat-form-field class="w-100">
+          <mat-label class="labelop">Enter the question</mat-label>
+          <input type="text" #myInput matInput formControlName="title" floatLabel="never">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+        <input type="radio" name="radio" id="_radio1" value="a" [(ngModel)]="radioStatus"
+          [ngModelOptions]="{standalone: true}" (click)="optionClick('a')" required>
+        <label class="label" for="_radio1">
+          <div id="tick_mark"></div>
+        </label>
+        <mat-form-field class="w-100">
+          <mat-label class="labelop">Option1</mat-label>
+          <input type="text" id="input1" matInput formControlName="a" autocomplete="off">
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+        <input type="radio" name="radio" id="_radio2" value="b" [(ngModel)]="radioStatus"
+          [ngModelOptions]="{standalone: true}" (click)="optionClick('b')" required>
+        <label class="label" for="_radio2">
+          <div id="tick_mark"></div>
+        </label>
+
+        <mat-form-field class="w-100">
+          <mat-label class="labelop">Option2</mat-label>
+          <input type="text" id="input2" matInput formControlName="b" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="btn-order my-4" style="display: flex; justify-content: center;">
+      <button class="btn py-2 px-3" type="submit" value="submit"
+        [disabled]="radioStatus==false || newQuestionForm.invalid" title="click here to add new question">
+        {{addQuestionBUtton}}</button>
+    </div>
+  </form>
+</div>

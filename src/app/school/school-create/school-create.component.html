@@ -1,0 +1,106 @@
+<div class="container _text_color">
+    <mat-card>
+        <h1 style="text-align: center;">Create School</h1>
+        <!-- [linear]="true"  add that to flow one after another-->
+        <mat-horizontal-stepper #stepper>
+            <mat-step [stepControl]="schoolCreateForm">
+                <ng-template matStepLabel>Fill out basic details</ng-template>
+                <form [formGroup]="schoolCreateForm">
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="name" class="control-label required">School Name</label>
+                            <input required type="text" id="name" class="form-control" formControlName="name">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="phone_number" class="control-label required">Phone Number</label>
+                            <input required type="number" id="phone_        number" class="form-control"
+                                formControlName="phone_number">
+
+                        </div>
+                    </div>
+                    <h2>Address</h2>
+                    <div formGroupName="address">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="line1" class="control-label required">Line 1</label>
+                                <input required type="text" id="line1" class="form-control" formControlName="line1">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="locality" class="control-label required">Locality</label>
+                                <input required type="text" id="locality" class="form-control"
+                                    formControlName="locality">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="city" class="control-label required">City</label>
+                                <input required type="text" id="city" class="form-control" formControlName="city">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="pincode" class="control-label required">Pincode</label>
+                            <input required type="number" id="pincode" class="form-control" formControlName="pincode">
+
+                        </div>
+                    </div>
+                    <button mat-button class="btn-primary" matStepperNext>Next</button>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="schoolContactPersonForm">
+                <ng-template matStepLabel>School contact person</ng-template>
+                <form [formGroup]="schoolContactPersonForm">
+
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="contact_person_name" class="control-label required">Name</label>
+                            <input type="text" id="contact_person_name" name="contact_person_name" class="form-control"
+                                formControlName="name">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="contact_person_mobile_number" class="control-label required">Mobile
+                                Number</label>
+                            <input type="number" id="contact_person_mobile_number" class="form-control"
+                                formControlName="mobile_number">
+
+                        </div>
+                    </div>
+
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button class="btn btn-primary" matStepperNext (click)="onSubmit()">Next</button>
+                </form>
+            </mat-step>
+
+            <!-- admin form -->
+            <mat-step>
+                <ng-template matStepLabel>Admin Details</ng-template>
+                <div *ngIf="isloading">
+                    complete school details first, friend.
+                    <mat-spinner *ngIf="isloading" color="accent" class="loading"></mat-spinner>
+                </div>
+
+
+                <app-admin-create *ngIf="!isloading" [schoolId]="schoolId"></app-admin-create>
+
+
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card>
+</div>

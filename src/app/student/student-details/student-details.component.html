@@ -1,0 +1,39 @@
+<div class="main-div">
+    <form>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="student_email" class="control-label required">Email</label>
+                <input type="email" [(ngModel)]="studentDetails.email" [ngModelOptions]="{standalone: true}"
+                    [disabled]="!showCase" id="student_email" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="student_name" class="control-label required">Name</label>
+                <input type="text" [(ngModel)]="studentDetails.name" [ngModelOptions]="{standalone: true}"
+                    id="student_name" [disabled]="!showCase" class="form-control">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="student_mobile_number" class="control-label required">Parent Mobile</label>
+                <input type="number" [(ngModel)]="studentMobile" [ngModelOptions]="{standalone: true}"
+                    [disabled]="!showCase" id="student_mobile_number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="parent_email" class="control-label required">Parent Email</label>
+                <input type="email" [(ngModel)]="parentEmail" [ngModelOptions]="{standalone: true}"
+                    [disabled]="!showCase" id="parent_email" class="form-control">
+            </div>
+        </div>
+        <div class="row justify-content-center mx-3">
+            <button class="mx-3 btn" *ngIf="!showCase" (click)="editUser()">Edit</button>
+            <button class="mx-3 btn" *ngIf="showCase" (click)="updateUser()">Update</button>
+            <button class="mx-3 btn" (click)="deleteUser()">Delete</button>
+        </div>
+    </form>
+</div>

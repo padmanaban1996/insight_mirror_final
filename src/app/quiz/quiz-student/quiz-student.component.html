@@ -1,0 +1,195 @@
+<div class="overall px-2" id="overall" *ngFor="let question of filteredQuestions; let i = index">
+    <div class="wrapper">
+        <div class="card">
+            <div class="questionCard px-3">
+                <div class="leftOption" *ngIf="rightAnswercount <= 9 "><span
+                        class="number1">0{{rightAnswercount}}</span></div>
+                <div class="leftOption" *ngIf="rightAnswercount >= 10 "><span
+                        class="number1">{{rightAnswercount}}</span></div>
+                <div class="numberCircle">{{pager.index +1}}</div>
+                <div class="rightOption" *ngIf="wrongAnswerCount <= 9"><span
+                        class="number2">0{{wrongAnswerCount}}</span></div>
+                <div class="rightOption" *ngIf="wrongAnswerCount >= 10"><span
+                        class="number2">{{wrongAnswerCount}}</span></div>
+                <div class="mt-5">
+                    <div>
+                        <p style="color: #3a8af6;" class="m-0 mt-2">Question {{pager.index + 1}}/{{pager.count}}</p>
+                    </div>
+                    <div class="py-3" *ngIf="question.qtype === 'comprehension'">
+                        <p style="text-align: justify;">{{question.paragraph}}</p>
+                    </div>
+
+                    <div class="mt-2">
+                        <img width="100px" class="image-fluid " *ngIf="question.image" [src]="question.image"
+                            class="image">
+                        <div class="py-3" [hidden]="question.qtype === 'comprehension'">
+                            <p style="text-align: justify;">{{question.title}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-lg-4 px-sm-2 px-md-2 question">
+                <div class="row px-3" *ngIf="question.qtype === 'comprehension'">
+                    <div class="col">
+                        <h1 style="text-align: justify; color: black">
+                            {{question.title}}
+                        </h1>
+                    </div>
+                </div>
+                <div class="row px-2"
+                    [hidden]="(question.qtype === 'blanks' || question.qtype === 'picmcq') || question.qtype === 'paragraph'"
+                    *ngIf="question.qtype != 'matches'">
+                    <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12 ">
+                        <input type="radio" name="radio" id="_radio1" value="a" [disabled]="isChecked"
+                            (click)="optionClick('a', i, question.a)" required>
+                        <label class="label_1" for="_radio1">
+                            <div id="tick_mark"></div>
+                        </label>
+                        <label for="_radio1" class="options">
+                            <p class="m-0">{{question.a}}</p>
+                        </label>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                        <input type="radio" name="radio" id="_radio2" value="b" [disabled]="isChecked"
+                            (click)="optionClick('b',i, question.b)" required>
+                        <label class="label_2" for="_radio2">
+                            <div id="tick_mark"></div>
+                        </label>
+                        <label for="_radio2" class="options">
+                            <p class="m-0">{{question.b}}</p>
+                        </label>
+                    </div>
+                </div>
+                <div class="row mt-lg-5 mt-sm-0 px-2" *ngIf="question.qtype != 'matches'"
+                    [hidden]="(question.qtype === 'mcq2' || question.qtype === 'blanks') || question.qtype === 'picmcq' || question.qtype === 'paragraph'">
+                    <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                        <input type="radio" name="radio" id="_radio3" value="c" [disabled]="isChecked"
+                            (click)="optionClick('c',i, question.c)" required>
+                        <label class="label_3" for="_radio3">
+                            <div id="tick_mark"></div>
+                        </label>
+                        <label for="_radio3" class="options">
+                            <p class="m-0">{{question.c}}</p>
+                        </label>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                        <input type="radio" name="radio" id="_radio4" value="d" [disabled]="isChecked"
+                            (click)="optionClick('d',i, question.d)" required>
+                        <label class="label_4" for="_radio4">
+                            <div id="tick_mark"></div>
+                        </label>
+                        <label for="_radio4" class="options">
+                            <p class="m-0">{{question.d}}</p>
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="question.qtype === 'blanks'">
+                    <div>
+                        <input type="text" class="option" row required placeholder="Enter the Answer" autocomplete="off"
+                            [(ngModel)]="answer" (ngModelChange)="answer = $event.toLowerCase()">
+                    </div>
+                </div>
+                <div *ngIf="question.qtype === 'paragraph'">
+                    <div>
+                        <textarea type="text" class="option" row required placeholder="Enter the Answer"
+                            autocomplete="off" [(ngModel)]="answer"
+                            (ngModelChange)="answer = $event.toLowerCase()"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="question.qtype === 'picmcq'" class="mx-3">
+                    <div class="row mt-3 d-flex ">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <div class="row d-flex justify-content-center align-items-center px-3 my-2">
+                                <div class="avatar-wrapper">
+                                    <img class="profile-pic" [src]="question.a" />
+                                </div>
+                                <input type="radio" name="radio" id="radio1" value="a" [disabled]="isChecked"
+                                    (click)="optionClick('a',i, question.a)" [(ngModel)]="radioStatus"
+                                    [ngModelOptions]="{standalone: true}" required>
+                                <label for="radio1" class="tickmark_label">
+                                    <div id="tick_mark"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <div class="row d-flex justify-content-center my-2">
+                                <div class="avatar-wrapper">
+                                    <img class="profile-pic" [src]="question.b" />
+                                </div>
+                                <input type="radio" name="radio" id="radio2" value="b" [disabled]="isChecked"
+                                    (click)="optionClick('b',i, question.b)" [(ngModel)]="radioStatus"
+                                    [ngModelOptions]="{standalone: true}" required>
+                                <label for="radio2" class="tickmark_label">
+                                    <div id="tick_mark"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-5 mt-sm-0">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <div class="row d-flex justify-content-center my-2">
+                                <div class="avatar-wrapper">
+                                    <img class="profile-pic" [src]="question.c" />
+                                </div>
+                                <input type="radio" name="radio" id="radio3" value="c" [disabled]="isChecked"
+                                    [(ngModel)]="radioStatus" [ngModelOptions]="{standalone: true}"
+                                    (click)="optionClick('c',i, question.c)" required>
+                                <label for="radio3" class="tickmark_label">
+                                    <div id="tick_mark"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <div class="row d-flex justify-content-center my-2">
+                                <div class="avatar-wrapper">
+                                    <img class="profile-pic" [src]="question.d" />
+                                </div>
+                                <input type="radio" name="radio" id="radio4" value="d" [disabled]="isChecked"
+                                    [(ngModel)]="radioStatus" [ngModelOptions]="{standalone: true}"
+                                    (click)="optionClick('d',i, question.d)" required>
+                                <label for="radio4" class="tickmark_label">
+                                    <div id="tick_mark"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="container" *ngIf="question.qtype == 'matches'">
+                    <div class="row">
+                        <div class="col d-flex justify-content-center align-items-center cards">
+                            <div class="list-item"
+                                *ngFor="let optionLeft of question.matchfollow.optionLeft; let index= index;trackBy:trackByIndex;">
+                                <label for="item-1" id="{{question.matchfollow.optionLeft[index]}}" class="labelmatch"
+                                    [class.red]="el == question.matchfollow.optionLeft[index]"
+                                    (click)="doSomething($event.currentTarget)"
+                                    [class.mapped]="mappedStandardMetrics[question.matchfollow.optionLeft[index]]"></label>
+                                <div class="content-text">{{question.matchfollow.optionLeft[index]}}</div>
+                            </div>
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-center cards">
+                            <div class="list-item"
+                                *ngFor="let optionRight of question.matchfollow.optionRight; let index= index;trackBy:trackByIndex;">
+                                <label for="alt-item-1" id="{{question.matchfollow.optionRight[index]}}"
+                                    class="labelmatch" [class.red]="el2 ==  question.matchfollow.optionRight[index]"
+                                    (click)="doSomething2($event.currentTarget)"
+                                    [class.mapped]="mappedFinancialModelMetrics[question.matchfollow.optionRight[index]]"></label>
+                                <div class="content-text">
+
+                                    {{question.matchfollow.optionRight[index]}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="wrapper"></div>
+                <div class=" row my-3 justify-content-center">
+                    <button class="btn" (click)="goTo(pager.index + 1, i);" *ngIf="!show">Next</button>
+                </div>
+                <div class="row my-3 justify-content-center">
+                    <button class="btn btn-primary" *ngIf="show" (click)="onSubmit()"
+                        [disabled]="dsableSubmitButton">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

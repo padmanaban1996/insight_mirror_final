@@ -1,0 +1,11 @@
+<div class="settings_page">
+    <nav mat-tab-nav-bar class="_text_color">
+        <a *ngFor="let link of navLinks" mat-tab-link #rla="routerLinkActive" [active]="rla.isActive"
+            [routerLink]="link.path" routerLinkActive class="_text_color">
+            {{link.label}}
+        </a>
+    </nav>
+    <div class="out_let">
+        <router-outlet></router-outlet>
+    </div>
+</div>

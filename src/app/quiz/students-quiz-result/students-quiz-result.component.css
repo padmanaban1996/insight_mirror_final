@@ -1,0 +1,159 @@
+.overall{
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-top: 5px;
+  height: calc(100vh - 160px) !important;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.summary{
+    background-color: lightgrey;
+    border-radius: 25px;
+    padding: 10px 40px 0px 40px;
+}
+h2{
+  font-size: 26px;
+}
+::ng-deep iframe{
+  border-radius: 25px !important;
+}
+
+ .fa, h3, p{
+    font-size: 20px;
+}
+
+
+.fa{
+    margin-right: 15px;
+}
+.fa-clock-o{
+  margin-right: 10px !important;
+}
+::ng-deep .question-add .modal-dialog{  
+    max-width: 100% !important;
+    margin: 0px!important;
+    border: none!important;
+  }
+  
+  ::ng-deep .modal .show .modal-dialog {
+     transform: none!important;
+  }
+  ::ng-deep  .modal-open .modal{
+    overflow: hidden !important;
+  }
+  ::ng-deep .modal-content{
+    border: none !important;
+    border-radius: 0px !important;
+  }
+  .modal_control{
+    height: 100vh;
+    overflow:hidden;
+    overflow-y: scroll;
+    padding: 8px;
+  }
+  ::ng-deep .question-upload .modal-content{  
+    border: 3px solid #3a8af6!important;
+    border-radius: 25px !important;
+  }
+  ::ng-deep .rank-list .modal-content{  
+    border: 3px solid #3a8af6!important;
+    border-radius: 25px !important;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+      to left top,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.5)
+    );
+    border-radius: 1rem;
+    margin: 1rem 0rem;
+    padding: 2rem;
+    cursor: pointer;
+    box-shadow: 6px 6px 20px rgba(122, 122, 122, 0.212);
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-info {
+    display: flex;
+    padding-left: 15px;
+    padding-right: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .percentage{
+position: absolute;
+      font-size: xx-large;
+      color: black;
+      font-weight: bold;
+      top: 52%;
+  }
+  .percentage-small{
+    position: absolute;
+          font-size: x-large;
+          color: black;
+          font-weight: bold;
+          top: 52%;
+      }
+  .progress{
+    height: 7px;
+    width: 90px;
+    
+  }
+  .progress-bar{
+    background-color: black;
+  }
+  .button{
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+  }
+  
+@media only screen and (max-width: 600px) {
+  .overall{
+    height: 100% !important;
+  }
+    .summary{
+        background-color: rgb(248, 246, 246);
+        border-radius: 25px;
+        padding: 5px 10px 5px 10px;
+    }
+    h2{
+      font-size: 18px;
+    }
+   .fa ,h3,p{
+        font-size: 14px;
+    }
+    .fa-clock-o{
+      margin-right: 6px !important;
+    }
+    .fa{
+        margin-right: 10px;
+    }
+    .card{
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+    .percentage{
+      position: absolute;
+      font-size: x-large;
+      color: black;
+      font-weight: bold;
+      top: 55%;
+    }
+    .percentage-small{
+      position: absolute;
+      font-size: large;
+      color: black;
+      font-weight: bold;
+      top: 55%;
+    }
+}

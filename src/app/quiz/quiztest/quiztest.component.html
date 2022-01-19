@@ -1,0 +1,28 @@
+<div *ngIf="user.role == 'teacher'">
+    <app-quiz-teacher [quiz]="quiz" [studentsAnswers]="allStudentsAnswer" [participants]=participants>
+    </app-quiz-teacher>
+</div>
+<div *ngIf="user.role == 'student' && showQuiz" class="overall">
+    <app-quiz-student [quiz]="quiz" [reattempt]="reattempt" [endQuiz]="endQuiz">
+    </app-quiz-student>
+</div>
+<div *ngIf="user.role == 'student' && showQuiz == false" class="overall">
+    <div class="row my-3" *ngIf="embededVideos.length > 0">
+        <div class="col d-flex justify-content-center text-center">
+            <h2>RELATED VIDEOS</h2>
+        </div>
+    </div>
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let video of embededVideos">
+            <div class="d-flex justify-content-center align-items-center">
+                <iframe width="400" height="200" [src]="'https://www.youtube.com/embed/' + video.id | safe">
+                </iframe>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+    <div class="row my-3">
+        <div class="col d-flex justify-content-center text-center">
+            <button class="btn" (click)="startQuiz()">Start Quiz</button>
+        </div>
+    </div>
+</div>

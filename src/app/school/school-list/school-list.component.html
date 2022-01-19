@@ -1,0 +1,10 @@
+<mat-spinner *ngIf="loading" class="loading"></mat-spinner>
+
+<app-im-alert type="danger" *ngIf="schoolsLength == 0">Not Found. Create one.</app-im-alert>
+
+<!-- <app-im-alert type="success" *ngIf="schoolsLength > 0">{{schoolsLength}} Schools found.</app-im-alert> -->
+
+<mat-list *ngFor="let school of schools; index as i" class="_text_color">
+    <mat-list-item>{{school.name}}</mat-list-item>
+    <button *ngIf="school.admin" class="btn">Add admin</button>
+</mat-list>

@@ -1,0 +1,13 @@
+<div class="_text_color">
+  <div>
+    <h1 class="text-center mb-1">{{quizPageTitle}}</h1>
+  </div>
+  <div>
+    <a *ngIf="loggedInUser.role == 'teacher'" (click)="openAddNewQuiz()" class="float">
+      <i class="fa fa-plus my-float"></i>
+    </a>
+  </div>
+</div>
+<div>
+  <app-quiz-list></app-quiz-list>
+</div>

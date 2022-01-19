@@ -1,0 +1,27 @@
+<app-im-alert type="danger" *ngIf="quizLength == 0">Not
+    Found.Create one</app-im-alert>
+<mat-spinner *ngIf="loading == true && quizLength == null" [diameter]="50" class="loading">
+</mat-spinner>
+<div class="row py-3">
+    <div class="col-md-4 d-flex justify-content-end align-items-center">
+        <div class="search-wrapper">
+            <input autocomplete="off" class="search-input" type="text" placeholder="Search"
+                (keyup)="updateFilter($event)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search"
+                viewBox="0 0 24 24">
+                <defs></defs>
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <mat-chip-list class="quizlists" *ngFor="let item of quizlists; let i = index">
+        <mat-chip class="_text_color" class="m-3" (click)="onListItemClick(i)"><i class="fa fa-check m-2"
+                *ngIf="selected[i]" style="color: green;" aria-hidden="true"></i>
+            {{item.name}}</mat-chip>
+    </mat-chip-list>
+</div>

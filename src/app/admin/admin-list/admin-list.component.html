@@ -1,0 +1,35 @@
+<app-im-alert type="danger" *ngIf="allAdminsOfASchoollength == 0 ">{{adminError}}</app-im-alert>
+
+<!-- <app-im-alert type="success" *ngIf="allAdminsOfASchoollength >0 ">{{allAdminsOfASchoollength}}
+    Admins found</app-im-alert> -->
+<mat-spinner *ngIf="loading == true && allAdminsOfASchoollength == null" [diameter]="50" class="loading">
+</mat-spinner>
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table">
+    <thead>
+        <tr>
+            <th>
+                <h2 class="text-center text-white m-0">{{adminTableHead}}</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let admin of allAdminsOfASchool; index as i">
+            <td (click)="onListItemClick(i)" style="color: black; cursor: pointer;">{{admin.name | titlecase}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #singleAdminModal let-modal>
+    <div class="modal_control">
+        <div class="modal-header _text_color">
+            <h2 class="modal-title _text_color" id="modal-basic-title">Admin Details</h2>
+            <i class="fa fa-times _text_color" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+        </div>
+        <div class="modal-body">
+            <app-admin-details [id]='selectedid' (refresh_admins)="onSaveDataRefreshAdmins($event)"
+                (modalClose)="modalClose($event )">
+            </app-admin-details>
+        </div>
+    </div>
+</ng-template>

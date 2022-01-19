@@ -1,0 +1,67 @@
+<div class="container-fluid mb-4 dashboard">
+    <div id="root">
+        <div class="pt-2">
+            <div class="row  justify-content-between">
+                <div class="c-dashboardInfo col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                    <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                            Students
+                        </h4>
+                        <span
+                            class="hind-font caption-12 c-dashboardInfo__count">{{adminDashboard.studentsCount}}</span>
+                    </div>
+                </div>
+                <div class="c-dashboardInfo col-lg-2 col-md-4 col-sm-6">
+                    <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Teachers
+                        </h4>
+                        <span
+                            class="hind-font caption-12 c-dashboardInfo__count">{{adminDashboard.teachersCount}}</span>
+                    </div>
+                </div>
+                <div class="c-dashboardInfo col-lg-2 col-md-4 col-sm-6">
+                    <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Live classes
+                        </h4><span
+                            class="hind-font caption-12 c-dashboardInfo__count">{{adminDashboard.liveSchedulesCount}}</span>
+                    </div>
+                </div>
+                <div class="c-dashboardInfo col-lg-2 col-md-4 col-sm-6">
+                    <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Upcoming
+                            classes
+                        </h4><span
+                            class="hind-font caption-12 c-dashboardInfo__count">{{adminDashboard.upcomingSchedulesCount}}</span>
+                    </div>
+                </div>
+                <div class="c-dashboardInfo col-lg-2 col-md-4 col-sm-6">
+                    <div class="wrap">
+                        <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Closed Classes
+                        </h4><span
+                            class="hind-font caption-12 c-dashboardInfo__count">{{adminDashboard.closedSchedule}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-lg-6 col-xs-12">
+            <mat-card class="_overall_mat_card_inner">
+                <div>
+                    <canvas baseChart [datasets]="linechartValue" [labels]="lineChartLabels"
+                        [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType">
+                    </canvas>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-lg-6 col-xs-12 mt-md-0 mt-3">
+            <mat-card class="_overall_mat_card_inner">
+                <div>
+                    <canvas baseChart [datasets]="barChartValue" [labels]="barChartLabels" style="height: 50vh;"
+                        #barChart [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

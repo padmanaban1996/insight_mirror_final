@@ -1,0 +1,70 @@
+<div class="overall">
+  <div class="container">
+    <div class="wrapper d-flex justify-content-center align-items-center">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mobile-hidden">
+        <canvas #myCanvas class="canvas" width="300" height="300">
+        </canvas>
+        <div class="px-5 text">
+          <h1 class="text-center text-white">Insight Mirror</h1>
+          <p class="text-white">
+            Insight Mirror provides the students with high-end learning experience. We are user-friendly, feasible and
+            have flexible plans which makes us stand out amongst the other video conferencing portals. Providing an
+            uninterrupted and soulful schooling experience.
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="right">
+          <form [formGroup]="authLoginForm" novalidate>
+            <div class="d-flex justify-content-center py-3">
+              <h1 class="title m-0">Log in</h1>
+            </div>
+            <div class="field">
+              <input type="text" class="form-control" formControlName="email" required>
+              <label>Enter Username</label>
+            </div>
+            <div *ngIf="!forgotPwdClicked" class="field">
+              <mat-icon class="placeholder" (click)="passwordEye()" class="input_img_login">
+                {{p_hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+              <input [type]="p_hide ? 'password' : 'text'" type="password" class="form-control"
+                formControlName="password" required>
+              <label>Enter Password</label>
+            </div>
+            <div class="content">
+              <div class="align-items-center d-flex justify-content-between w-100 mt-4"
+                style="color:#196dff; font-size:15px; cursor: pointer;">
+                <div *ngIf="forgotPwdClicked == false">
+                  <input autocomplete="off" type="checkbox" [(ngModel)]="rememberMe"
+                    [ngModelOptions]="{standalone: true}">
+                  <label for="rememberMe" class="ml-2 m-0">Remember
+                    Me</label>
+                </div>
+                <span class="bar ml-3 mr-3" *ngIf="forgotPwdClicked == false">|</span>
+                <div (click)="forgotPassword()">
+                  <a *ngIf="forgotPwdClicked == true">{{backToLogin}}</a>
+                  <a *ngIf="forgotPwdClicked == false">{{forgotPasswordLabel}}</a>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <button type="submit" *ngIf="!forgotPwdClicked" [disabled]='!authLoginForm.valid' (click)="onSubmit()"
+                class="btn">Login<i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
+              <button *ngIf="forgotPwdClicked" [disabled]='!f.email.valid' class="btn"
+                (click)="sendResetLink()">{{verifyEmailButton}}<i class="fa fa-spinner fa-spin"
+                  *ngIf="loading"></i></button>
+            </div>
+            <div *ngIf="f.email.invalid && f.email.errors.pattern && submitted" class="alert alert-danger">
+              {{errorAlert}}
+            </div>
+          </form>
+          <div class="social_media d-flex justify-content-center align-items-center">
+            <small class="_text_color text-center">Powered by</small>
+            <img class="img-fluid d-block mx-auto" width="150px" src="/assets/images/fevicon.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

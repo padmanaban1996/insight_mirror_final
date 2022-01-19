@@ -1,0 +1,134 @@
+<!-- <div class="container-fluid align-items-center">
+    <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+    <h2 class="text-center m-0">Live class Summary</h2>
+</div> -->
+<div class="container">
+    <mat-tab-group *ngIf="quizResults !== null">
+        <mat-tab label="Summary">
+            <ng-template matTabContent class="mt-0">
+                <div class="_text_color schedule_heading">
+                    <h1 class="details_title my-2">Attendance</h1>
+                </div>
+                <div class="row justify-content-center mt-0">
+                    <div class="title mt-0">
+                        <span class="red_button"></span>
+                        <span class="text _text_color">Not joined</span>
+                    </div>
+                    <div class="title mt-0">
+                        <span class="green_button"></span>
+                        <span class="text _text_color">Active and Present in Call</span>
+                    </div>
+                    <div class="title mt-0">
+                        <span class="yellow_button"></span>
+                        <span class="text _text_color">Tab switching/changing application</span>
+                    </div>
+                </div>
+                <table id="excel-table1" datatable [dtOptions]="dtOptions" class="row-border hover mt-0">
+                    <thead>
+                        <tr class="text-white">
+                            <th>Name</th>
+                            <th>Activities Index</th>
+                            <th>Activity</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let student of allStudentsAttendance; let x = index">
+                            <td>{{student.name}}</td>
+                            <td>
+                                <div class="progress" [ngStyle]="{'width':  '100%'}">
+                                    <div class="progress-bar" role="progressbar"
+                                        *ngFor="let item of studentWiseCalculatedArray[x]"
+                                        [ngStyle]="{'width': item.width +'%','background-color': item.color}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{studentWiseOverallpercentage[x]}}%</td>
+
+                            <td>
+                                <input type="checkbox" [disabled]="attendanceStatus"
+                                    [(ngModel)]="allStudentsAttendance[x].status" (click)="giveAttendance(x)" id="" />
+                                {{allStudentsAttendance[x].status ? 'Present' : 'Absent'}}
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="mt-0" style="display: flex; justify-content: center;">
+                    <button *ngIf="!attendanceStatus" class="btn mt-0" (click)="saveData()">Save</button>
+                    <button *ngIf="attendanceStatus" (click)="exportAsXLSX()" class="btn mt-0"><i
+                            class="fa fa-file-excel-o" style="font-size:15px"></i>Excel</button>
+                </div>
+            </ng-template>
+        </mat-tab>
+        <!-- <hr style="width:100%;border-width:2;color: gray;height:2px; text-align:center;margin-left:1"> -->
+        <mat-tab label="Details">
+            <ng-template matTabContent class="mt-1">
+                <div class="_text_color schedule_heading mt-1">
+                    <h1 class="details_title mb-1">Schedule Details</h1>
+                </div>
+                <table id="excel-table2" datatable [dtOptions]="dtOptions" class="row-border hover mt-1">
+                    <thead>
+                        <tr class="text-white">
+                            <th>School Name</th>
+                            <th>No of Participants</th>
+                            <th>No of Host</th>
+                            <th>Host Name</th>
+                            <th>Schedule Date</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Duration</th>
+                            <th>Subject</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{schoolName}}</td>
+                            <td>{{noOfparticipants}}</td>
+                            <td>1</td>
+                            <td>{{hostName}}</td>
+                            <td>{{schedule.scheduled_date | date : 'yyyy-MM-dd'}}</td>
+                            <td>{{schedule.starts_at | date : 'h:mm a'}}</td>
+                            <td>{{schedule.ends_at | date : 'h:mm a'}}</td>
+                            <td>{{duration}} min</td>
+                            <td>{{schedule.subject}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="mt-1" style="display: flex; justify-content: center;">
+
+                    <button (click)="exportexcel()" class="btn mt-1"><i class="fa fa-file-excel-o"
+                            style="font-size:15px"></i>Excel</button>
+                </div>
+            </ng-template>
+        </mat-tab>
+        <div *ngFor="let result of quizResults; let i = index">
+            <mat-tab label="{{result.quizName}}">
+                <ng-template matTabContent class="mt-2">
+                    <div class="_text_color schedule_heading mt-2">
+                        <h1 class="details_title mb-1">{{result.quizName}}</h1>
+                    </div>
+                    <table datatable [dtOptions]="dtOptions" class="row-border hover mt-2">
+                        <thead *ngIf="result.answerSheet[0] !== undefined">
+                            <tr>
+                                <th>Name</th>
+                                <th *ngFor="let header of _object.keys(result.answerSheet[0].answerSheet); let i=index">
+                                    {{header}}</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="result.answerSheet !== undefined">
+                            <tr *ngFor="let student of result.answerSheet; let x = index">
+                                <td>{{ student.name }}</td>
+                                <td *ngFor="let objKey of _object.keys(student.answerSheet); let j=index">
+                                    {{ student.answerSheet[objKey].answer || 'Did not Answer'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-template>
+            </mat-tab>
+        </div>
+
+    </mat-tab-group>
+</div>

@@ -1,0 +1,35 @@
+<div class="sub_page">
+    <div class="row">
+        <div class="col-lg-4" *ngFor="let card of cards; let i=index">
+            <div class="card  mb-lg-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted text-uppercase text-center">{{card.tiername}}</h5>
+                    <div class="row" style="display: flex; justify-content: center;">
+                        <span>&#8377;</span>
+                        <h6 class="card-price " style="font-size: 30px;">{{rateInRs[i]}}</h6><span
+                            class="period">/month</span>
+                    </div>
+
+                    <hr>
+                    <ul class="fa-ul">
+                        <li *ngFor="let feature of card.features">
+                            <div *ngIf="feature.availability; else notAvail">
+                                <span class="fa-li">
+                                    <fa-icon [icon]="faCheck"></fa-icon>
+                                </span>{{feature.featurename}}
+                            </div>
+                            <ng-template #notAvail>
+                                <span class="fa-li">
+                                    <fa-icon [icon]="faTimes"></fa-icon>
+                                </span>
+                                <div class="text-muted">{{feature.featurename}}</div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <button href="#" class="btn btn-block btn-primary text-uppercase" *ngIf="plan !== i+1"
+                        (click)="buyNow(i)">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

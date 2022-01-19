@@ -1,0 +1,28 @@
+<p>create works!</p>
+
+<form #newQuestion="ngForm" (ngSubmit)="submit(newQuestion.value)">
+
+    <input ngModel placeholder="Enter your question here" name="title" />
+    <br />
+    <label>option A</label> <input ngModel name="a" placeholder="Answer options" />
+    <br />
+    <label>option B</label> <input ngModel name="b" placeholder="Answer options" />
+    <br />
+    <label>option C</label> <input ngModel name="c" placeholder="Answer options" />
+    <br />
+    <label>option D</label> <input ngModel name="d" placeholder="Answer options" />
+    <br />
+    <label>Correct Answer</label>
+    <select required ngModel name='correctAnswer' (change)="answerSelectedValue($event.target.value)">
+        <option *ngFor="let item of dropDownListItems" [value]="item">
+            {{item}}
+        </option>
+    </select>
+    
+    <label>Time to Answer this question</label>
+
+    <ngb-timepicker [(ngModel)]="time" name='time' [seconds]='true' ngDefaultControl></ngb-timepicker>
+    
+    <button type="submit">Add Question</button>
+
+</form>

@@ -1,0 +1,619 @@
+<div class="row" *ngIf="socket.ioSocket.connected == false"
+    style="position: absolute;
+    z-index:1000;width: 100%; height: 100%; background-color: aliceblue; display: flex;align-items: center; justify-content: center;" class="text-center">
+    <div class="col">
+        <p>Setting the call</p>
+        <mat-spinner class="mt-5" [diameter]="50" class="loading">
+        </mat-spinner>
+        <button class="btn mt-5" (click)="socketTryAgain()">Retry</button>
+    </div>
+</div>
+<div class="flex-container">
+    <!-- msg and participents.....  -->
+    <mat-card class="mat_card4" id="topWrapper">
+        <img class="logo_img" src="/assets/images/Logo.png" alt="logo">
+        <ul class="nav nav-tabs">
+            <li (click)="openChat()"><a><i class=" fa fa-comments" aria-hidden="true"></i>
+                    <i *ngIf="showChat == false && updatedMessageLength > messageLength" class=" fa fa-circle"
+                        style="top:-15px;right:5px; position: relative;; color: red; font-size: 12px;"></i></a>
+            </li>
+            <li (click)="openParticipents()"><a> <i class=" fa fa-users" aria-hidden="true"></i></a>
+            </li>
+            <li *ngIf="user.role == 'student'" (click)="toggleQuizResult()"><a> <i class="fa fa-envelope"
+                        aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+        <p class=" timer">{{ now | date:'hh:mm a'}}</p>
+    </mat-card>
+    <mat-card class="mat_card3" *ngIf="showParticipents">
+        <div class="row participents_title">
+            <h2>{{participentsLabel}}</h2>
+            <i class="fa fa-times" aria-hidden="true" (click)="openParticipents()"></i>
+        </div>
+        <div class="row participents_title d-flex justify-content-center align-items-center"
+            *ngIf="user.role == 'teacher'">
+            <button (click)="toggle()" style="cursor: pointer; width: 160px; padding: 5;" class="btn btn-info">
+                <!-- <i class="fa fa-microphone-slash" aria-hidden="true"></i> -->
+
+                Mute Everyone
+            </button>
+        </div>
+        <div class="customList" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let participant of participants; let i = index">
+                    <div class="row" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="ml-3">
+                            {{ participant.name}}
+                        </div>
+                        <i *ngIf="user.role == 'teacher'" class="fa fa-cog m-2 fa-1x" (click)="showDiv2[i]=!showDiv2[i]"
+                            style="cursor: pointer;"></i>
+                    </div>
+                    <div *ngIf="showDiv2[i]">
+                        <hr class="mt-0">
+                        <div class="row">
+                            <div class="col text-center"
+                                (click)="(disableVideoButton[i]) ? '' : remoteVideoMuteByHost(i)"
+                                style="cursor: pointer;">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-camera-video-fill camera"
+                                    style="cursor: pointer;" *ngIf="!participant.videoMute" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z" />
+                                </svg>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                    class="bi bi-camera-video-off-fill camera" style="cursor: pointer;"
+                                    *ngIf="participant.videoMute" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10.961 12.365a1.99 1.99 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l6.69 9.365zm-10.114-9A2.001 2.001 0 0 0 0 5v6a2 2 0 0 0 2 2h5.728L.847 3.366zm9.746 11.925l-10-14 .814-.58 10 14-.814.58z" />
+                                </svg>
+                            </div>
+                            <div class="col text-center" style="cursor: pointer;"
+                                (click)="(disableAudioButton[i]) ? '' : remoteAudioMuteByHost(i)">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-fill audio"
+                                    fill="currentColor" style="cursor: pointer;" *ngIf="!participant.audioMute"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                                    <path fill-rule="evenodd"
+                                        d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                                </svg>
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-mute-fill audio"
+                                    fill="currentColor" style="cursor: pointer;" *ngIf="participant.audioMute"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M12.734 9.613A4.995 4.995 0 0 0 13 8V7a.5.5 0 0 0-1 0v1c0 .274-.027.54-.08.799l.814.814zm-2.522 1.72A4 4 0 0 1 4 8V7a.5.5 0 0 0-1 0v1a5 5 0 0 0 4.5 4.975V15h-3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-3v-2.025a4.973 4.973 0 0 0 2.43-.923l-.718-.719zM11 7.88V3a3 3 0 0 0-5.842-.963L11 7.879zM5 6.12l4.486 4.486A3 3 0 0 1 5 8V6.121zm8.646 7.234l-12-12 .708-.708 12 12-.708.707z" />
+                                </svg>
+                            </div>
+                            <div class="col text-center" (click)='kickStudentOut(participant.userId)'
+                                style="cursor: pointer;">
+                                <i class="fas fa-phone-slash fa-1x"></i>
+                            </div>
+                            <div class="col text-center"
+                                (click)="(disableScreenShareButton[i]) ? '' : toggleParticipentScreenShare(i)"
+                                style="cursor: pointer;">
+                                <i class="fa fa-desktop fa-1x" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </mat-card>
+    <mat-card class="mat_card3" *ngIf="showChat">
+        <div class="row chat_title">
+            <h2>Chat</h2>
+            <i class="fa fa-times" aria-hidden="true" (click)="openChat()"></i>
+        </div>
+        <div class="customList" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+            <div *ngFor="let msg of messageList" class="message" [class.left]="!msg.self" [class.right]="msg.self">
+                <div class="msg-detail">
+                    <div class="msg-info">
+                        <p *ngIf="msg.self">
+                            You</p>
+                        <p *ngIf="!msg.self">
+                            {{msg.sender}}</p>
+                    </div>
+                    <div class="msg-content">
+                        <p class="line-breaker ">{{msg.message}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-100" style="position: relative; bottom: 15px;">
+            <div class="col-10">
+                <input class="inp" [(ngModel)]="newMessage" (keyup.enter)="($event.keyCode == 13) 
+                && sendNewMessage()" required placeholder="{{chatInputPlaceholder}}" />
+            </div>
+            <div class="col d-flex justify-content-center align-items-center">
+                <i class="fa fa-paper-plane" aria-hidden="true" (click)='sendNewMessage()'></i>
+            </div>
+        </div>
+    </mat-card>
+    <mat-card class="mat_card3" *ngIf="showQuizResults" style="overflow-y: scroll;">
+        <div class="row chat_title">
+            <h2>Quiz Results</h2>
+            <i class="fa fa-times" aria-hidden="true" (click)="toggleQuizResult()"></i>
+        </div>
+        <div class="row d-flex justify-content-center text-center">
+            <div>
+                <h1 class="m-0" *ngIf="percentage > 40">CONGRATULATIONS</h1>
+                <h1 class="m-0" *ngIf="percentage < 40">BETTER LUCK NEXT TIME</h1>
+                <h3 class="text-muted" *ngIf="percentage > 40">YOU PASSED THE TEST</h3>
+                <h3 class="text-muted" *ngIf="percentage < 40">YOU FAILED THE TEST</h3>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col">
+                <div style="display: flex; justify-content: center; align-items: center; vertical-align: middle;">
+                    <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [colors]="colors"
+                        [chartType]="doughnutChartType" [plugins]="doughnutChartPlugins"
+                        [options]="doughnutChartOptions">
+                    </canvas>
+                    <div class="percentage">{{percentage}}%</div>
+                </div>
+            </div>
+        </div>
+        <table class="display nowrap  table">
+            <thead style="position: inherit;">
+            </thead>
+            <tbody *ngFor="let student of Data; let i = index">
+                <tr *ngFor="let data of Data[i].answerSheet; let j=index">
+                    <td>
+                        {{ data.title }}
+                    </td>
+                    <td>
+                        {{ data.answer || 'Did not Answer' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </mat-card>
+    <!-- mobile toggle menu -->
+    <div *ngIf="showDiv" class="mobile_toggle_menu" [@enterAnimation]>
+        <ul style="margin: 0; padding: 20px;">
+            <li>
+                <div *ngIf="user.role == 'teacher'">
+                    <div (click)="open(quizlistContent)">
+                        <div class="row">
+                            <div class="col-1"><i class="fa fa-question-circle" aria-hidden="true" title="Quiz"></i>
+                            </div>
+                            <div class="col">
+                                <p style="cursor: pointer;">{{quizLabel}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </li>
+            <li>
+                <div (click)="openParticipents()">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="col">
+                            <p style="cursor: pointer;">{{participentsLabel}}</p>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+            </li>
+            <li *ngIf="user.role == 'student'">
+                <div style="cursor: pointer;" (click)="toggleQuizResult()">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p style="cursor: pointer;">Quiz Results</p>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+            </li>
+            <li *ngIf="(user.role == 'teacher') && (quizEnd == true)">
+                <div style="cursor: pointer;" (click)="showAllQuizResults(resultsModel)">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p style="cursor: pointer;" *ngIf="!showAllQuizResultsToStudents">Show Results</p>
+                            <p style="cursor: pointer;" *ngIf="showAllQuizResultsToStudents">Hide Results</p>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+            </li>
+            <li>
+                <div style="cursor: pointer;" (click)="opensettings(settingModal)">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p style="cursor: pointer;">{{settingsLabel}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li *ngIf="user.role == 'teacher'">
+                <hr>
+                <div style="cursor: pointer;">
+                    <div class="row" *ngIf="!isHostVideoPinned" (click)="pinHostVideo()">
+                        <div class="col-1">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p>Pin</p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isHostVideoPinned" (click)="unPinHostVideo()">
+                        <div class="col-1">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p>Unpin</p>
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            <!-- <li>
+                <hr>
+                <div style="cursor: pointer;" (click)="toggleWebcam();">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                        </div>
+                        <div class="col">
+                            <p style="cursor: pointer;">Webcam</p>
+                        </div>
+                    </div>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+    <mat-card class="bottom_nav" *ngIf="showBottomNav" id="btnMenu" [@enterAnimation]>
+        <!-- quiz and settings and pin  section-->
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col meting_details_quiz ">
+                <div class="row">
+                    <div class="col" style="width: 100px;">
+                        <div (click)="open(quizlistContent)" style="cursor: pointer;" *ngIf="user.role == 'teacher'">
+                            <i class="fa fa-question-circle" aria-hidden="true" title="Quiz"></i>
+                            <p class="m-0">{{quizLabel}}</p>
+                        </div>
+                    </div>
+                    <div class="col" style="width: 100px;">
+                        <div style="cursor: pointer;" (click)="opensettings(settingModal)">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <p class="m-0">{{settingsLabel}}</p>
+                        </div>
+                    </div>
+                    <div class="col" style="width: 100px;">
+                        <div (click)="showAllQuizResults()" style="cursor: pointer;" *ngIf="user.role == 'teacher'">
+                            <i class="fa fa-file-text" aria-hidden="true" title="Quiz Results" style=" font-size: 25px;
+                                color: #343434;"></i>
+                            <p style="cursor: pointer;" *ngIf="!showAllQuizResultsToStudents" class="m-0">Results</p>
+                            <p style="cursor: pointer;" *ngIf="showAllQuizResultsToStudents" class="m-0">Hide</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- button section -- call -->
+            <div class="col buttons_section">
+                <div class="row ">
+                    <div class="call-view__controls__icon-btn" (click)="toggleAudioMute()">
+                        <i class="fa fa-microphone fa-2x" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                            title="Audio Mute" style="color: gray;" *ngIf="!isPlaying"></i>
+                        <i class="fa fa-microphone-slash fa-2x" aria-hidden="true" data-toggle="tooltip"
+                            data-placement="top" title="Audio Unmute" style="color: gray;" *ngIf="isPlaying"></i>
+                    </div>
+                    <div class="call-view__controls__icon-btn important" (click)="hangUpAndExit()">
+                        <i class="fa fa-phone " aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                            title="End Call" style="color: #FAFAFA; transform: rotate(225deg);"></i>
+                    </div>
+                    <div class="call-view__controls__icon-btn" (click)="toggleVideoMute()">
+                        <i class="fa fa-video-camera fa-2x" aria-hidden="true" data-toggle="tooltip"
+                            data-placement="top" title="Video Mute" style="color: gray;" *ngIf="!isRunning"></i>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" data-toggle="tooltip" data-placement="top"
+                            title="Video Unmute" class="bi bi-camera-video-off-fill"
+                            style="cursor: pointer; color: gray;" *ngIf="isRunning" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10.961 12.365a1.99 1.99 0 0 0 .522-1.103l3.11 1.382A1 1 0 0 0 16 11.731V4.269a1 1 0 0 0-1.406-.913l-3.111 1.382A2 2 0 0 0 9.5 3H4.272l6.69 9.365zm-10.114-9A2.001 2.001 0 0 0 0 5v6a2 2 0 0 0 2 2h5.728L.847 3.366zm9.746 11.925l-10-14 .814-.58 10 14-.814.58z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <!-- present whiteboard section -->
+            <div class="col present_screen">
+                <div class="row">
+                    <div class="col" style="position: relative; width: 100px;" *ngIf="user.role == 'teacher'">
+                        <div style="cursor: pointer;" *ngIf="!isHostVideoPinned" (click)="unPinHostVideo()">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                            <p class="m-0"> Pin</p>
+                        </div>
+                        <div style="cursor: pointer;" *ngIf="isHostVideoPinned" (click)="pinHostVideo()">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                            <p class="m-0">Unpin</p>
+                        </div>
+                    </div>
+                    <div class="col" style="width: 100px;" *ngIf="user.role == 'teacher'">
+                        <div (click)="toggleScreenShare()" style="cursor: pointer;">
+                            <i class="fa fa-desktop" aria-hidden="true" title="Present screen"></i>
+                            <p class="m-0">Screen</p>
+                        </div>
+                    </div>
+                    <div class="col" *ngIf="user.role == 'student'">
+                        <div (click)="(disableParticipantScreenShareButton) ? '' : requestToggleScreenShare(userId)"
+                            style="cursor: pointer;">
+                            <i class="fa fa-desktop" aria-hidden="true" title="Present screen"></i>
+                            <p class="m-0">Screen</p>
+                        </div>
+                    </div>
+                    <div class="col" style="width: 100px;">
+                        <div (click)="onClick()" style="cursor: pointer;" title="Whiteboard" class="white_board"
+                            *ngIf="user.role == 'teacher'">
+                            <img src="/assets/images/WhiteBoard.png" style="width: 25px; height: 25px;">
+                            <p class="m-0">{{whiteboardLabel}}</p>
+                        </div>
+                    </div>
+                    <div class="col" style="width: 100px;">
+                        <div style="cursor: pointer;" *ngIf="!isRecording" (click)="startRecording()">
+                            <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                            <p class="m-0">Record</p>
+                        </div>
+                        <div style="cursor: pointer;" *ngIf="isRecording" (click)="stopRecording()">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                            <p class="m-0">Download</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <!-- mobile toggle bar only displays in mobile-->
+    <div class="mobile_menu" style="color: gray;" [@enterAnimation] id="toggleMenu">
+        <div class="test" (click)="showDiv = !showDiv"></div>
+    </div>
+    <div class="chat_mobile" id="chatMenu">
+        <i class="fa fa-comments" aria-hidden="true" (click)="openChat()"></i>
+        <i *ngIf="showChat == false && updatedMessageLength > messageLength" class=" fa fa-circle"
+            style=" position:absolute; color: red; font-size: 12px;"></i>
+    </div>
+    <div class="logo_img_mobile">
+        <img class="img_mobile" src="/assets/images/InsightMirror.png" alt="logo">
+    </div>
+    <!-- jitsi meet section -->
+    <!-- click within meet div is disabled to avoid interaction with the jitsi meet -->
+    <div class="mat_card1" #meet id="meet" style="pointer-events:none" (click)="false; $event.stopPropagation();">
+    </div>
+    <!-- modal ->teacher -->
+    <ng-template #quizlistContent let-modal>
+        <div class="modal_control">
+            <div class="modal-header">
+                <h2 class="modal-title w-100 text-center" id="modal-basic-title">{{liveclassmodalTitle}}</h2>
+                <div data-toggle="tooltip" data-placement="left" title="Audio mute/unmute">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="!isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                        <path fill-rule="evenodd"
+                            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-mute-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M12.734 9.613A4.995 4.995 0 0 0 13 8V7a.5.5 0 0 0-1 0v1c0 .274-.027.54-.08.799l.814.814zm-2.522 1.72A4 4 0 0 1 4 8V7a.5.5 0 0 0-1 0v1a5 5 0 0 0 4.5 4.975V15h-3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-3v-2.025a4.973 4.973 0 0 0 2.43-.923l-.718-.719zM11 7.88V3a3 3 0 0 0-5.842-.963L11 7.879zM5 6.12l4.486 4.486A3 3 0 0 1 5 8V6.121zm8.646 7.234l-12-12 .708-.708 12 12-.708.707z" />
+                    </svg>
+                </div>
+                <i class="fa fa-times" aria-hidden="true" (click)="modal.dismiss('Cross click')"
+                    style="padding-left: 15px;"></i>
+
+            </div>
+            <div class="modal-body">
+                <app-livequiz-list [hidden]="quizStart" [quizlists]="quizlists" (selectedQuiz)="selectedQuiz($event)">
+                </app-livequiz-list>
+
+                <timer [optionsAndFrequency]="optionsAndFrequency" [seconds]="seconds"
+                    (studentActions)="studentActions($event)" [scheduleId]="scheduleId" [start]="quizStart"
+                    [next]="next" [end]="quizEnd" [currentQuestionData]="currentQuestionData"
+                    [showResults]="showResults" *ngIf="seconds > 0"></timer>
+                <!-- add ngIf one quiz selected. open confirmation dialog -->
+                <div [*ngIf]="user.role == 'teacher' && (isQuizDataReceived == true)">
+
+                    <app-livequiz-teacher (teacherActions)="teacherActions($event)"
+                        (secondsAction)="secondsAction($event)" [currentQuestionData]="currentQuestionData"
+                        [seconds]="seconds" [next]="next" [quizName]="quizName" [currentQuizId]="currentQuizId"
+                        [lastQuestion]="lastQuestion" [scheduleId]="scheduleId" [start]="quizStart" [end]="quizEnd"
+                        [noOfAnsweredStudents]="noOfAnsweredStudents[i]" [showResults]="showResults"
+                        [quizData]="selectedQuizData" [studentsAnswers]="allStudentsAnswer">
+                    </app-livequiz-teacher>
+                </div>
+                <button #openModalButton [hidden]="true" (click)="open(studentModal)">Open Modal</button>
+
+            </div>
+
+        </div>
+    </ng-template>
+
+    <!-- modal ->student -->
+    <ng-template #studentModal let-modal>
+        <div class="modal_control">
+            <div class="modal-header">
+
+                <h2 class="modal-title w-100 text-center" id="modal-basic-title">{{liveclassmodalTitle}}</h2>
+                <div data-toggle="tooltip" data-placement="left" title="Audio mute/unmute">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="!isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                        <path fill-rule="evenodd"
+                            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-mute-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M12.734 9.613A4.995 4.995 0 0 0 13 8V7a.5.5 0 0 0-1 0v1c0 .274-.027.54-.08.799l.814.814zm-2.522 1.72A4 4 0 0 1 4 8V7a.5.5 0 0 0-1 0v1a5 5 0 0 0 4.5 4.975V15h-3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-3v-2.025a4.973 4.973 0 0 0 2.43-.923l-.718-.719zM11 7.88V3a3 3 0 0 0-5.842-.963L11 7.879zM5 6.12l4.486 4.486A3 3 0 0 1 5 8V6.121zm8.646 7.234l-12-12 .708-.708 12 12-.708.707z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <app-livequiz-student [optionsAndFrequency]="optionsAndFrequency" [seconds]="seconds"
+                        (studentActions)="studentActions($event)" [scheduleId]="scheduleId" [start]="quizStart"
+                        [next]="next" [end]="quizEnd" [currentQuestionData]="currentQuestionData"
+                        [showResults]="showResults">
+                    </app-livequiz-student>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <!-- modal ->settings -->
+    <ng-template #settingModal let-modal>
+        <div class="modal_control_settings">
+            <div class="modal-header w-100 text-center">
+                <h2 class="modal-title" id="modal-basic-title">Settings</h2>
+                <i class="fa fa-times" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label class="label_settings" for="audioInput">Audio Input</label>
+                </div>
+                <div class="row">
+                    <select matNativeControl id="audioInput" class="select-css">
+                        <option *ngIf="availableDevices.audioInput.length == 0">No Devices Found</option>
+                        <option *ngFor="let device of availableDevices.audioInput; ; let x = index "
+                            (click)="onaudioInputListItemClick(x)">
+                            {{device.label}}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label class="label_settings" for="audioOutput">Audio Output</label>
+                </div>
+                <div class="row">
+                    <select matNativeControl class="select-css">
+                        <option *ngIf="availableDevices.audioOutput.length == 0">No Devices Found</option>
+                        <option *ngFor="let device of availableDevices.audioOutput; ; let x = index "
+                            (click)="onaudioOutputListItemClick(x)">
+                            {{device.label}}</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label class="label_settings" for="videoInput">Video Input</label>
+                </div>
+                <div class="row">
+                    <select matNativeControl class="select-css">
+                        <option *ngIf="availableDevices.videoInput.length == 0">No Devices Found</option>
+                        <option *ngFor="let device of availableDevices.videoInput; ; let x = index "
+                            (click)="onvideoInputListItemClick(x)">
+                            {{device.label}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="results" *ngIf="showAllQuizResultsToStudents">
+        <div class="d-flex justify-content-end align-items-center my-2 mr-3" *ngIf="user.role == 'teacher'">
+            <i class="fa fa-times" aria-hidden="true" (click)="showAllQuizResults()"></i>
+        </div>
+        <div class="container-fluid">
+            <ngx-datatable #table class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
+                [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
+                <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                    [canAutoResize]="false">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                        <a title="Expand/Collapse Row" (click)="onSelectRow(row)" class="desktop-hidden"><i
+                                class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Quiz Results" [flexGrow]="3" [minWidth]="200">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span (click)="onSelectRow(row)">{{row.quizName}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-footer>
+                    <ng-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount"
+                        let-curPage="curPage" let-offset="offset" ngx-datatable-footer-template>
+                        <app-datatable-pager [page]="curPage" [visiblePagesCount]="currentVisible" [size]="pageSize"
+                            [count]="rowCount" [hidden]="false" (change)="table.onFooterPage($event)">
+                        </app-datatable-pager>
+                    </ng-template>
+                </ngx-datatable-footer>
+            </ngx-datatable>
+        </div>
+    </div>
+    <ng-template #singleQuiz let-modal>
+        <div class="modal_control">
+            <div class="modal-header">
+
+                <h2 class="modal-title w-100 text-center" id="modal-basic-title">{{liveclassmodalTitle}}</h2>
+                <div data-toggle="tooltip" data-placement="left" title="Audio mute/unmute">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="!isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                        <path fill-rule="evenodd"
+                            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-mute-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M12.734 9.613A4.995 4.995 0 0 0 13 8V7a.5.5 0 0 0-1 0v1c0 .274-.027.54-.08.799l.814.814zm-2.522 1.72A4 4 0 0 1 4 8V7a.5.5 0 0 0-1 0v1a5 5 0 0 0 4.5 4.975V15h-3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-3v-2.025a4.973 4.973 0 0 0 2.43-.923l-.718-.719zM11 7.88V3a3 3 0 0 0-5.842-.963L11 7.879zM5 6.12l4.486 4.486A3 3 0 0 1 5 8V6.121zm8.646 7.234l-12-12 .708-.708 12 12-.708.707z" />
+                    </svg>
+                </div>
+                <i class="fa fa-times ml-2" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <app-single-livequiz-result [quizData]="quizData" [quizId]="quizId" [schedule]="schedule"
+                        (resultActions)="resulPageActions($event)">
+                    </app-single-livequiz-result>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #singleStudentResult let-modal>
+        <div class="modal_control">
+            <div class="modal-header">
+
+                <h2 class="modal-title w-100 text-center" id="modal-basic-title">{{liveclassmodalTitle}}</h2>
+                <div data-toggle="tooltip" data-placement="left" title="Audio mute/unmute">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="!isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z" />
+                        <path fill-rule="evenodd"
+                            d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-mic-mute-fill" fill="currentColor"
+                        style="cursor: pointer;" (click)="toggleAudioMute()" *ngIf="isPlaying"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M12.734 9.613A4.995 4.995 0 0 0 13 8V7a.5.5 0 0 0-1 0v1c0 .274-.027.54-.08.799l.814.814zm-2.522 1.72A4 4 0 0 1 4 8V7a.5.5 0 0 0-1 0v1a5 5 0 0 0 4.5 4.975V15h-3a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-3v-2.025a4.973 4.973 0 0 0 2.43-.923l-.718-.719zM11 7.88V3a3 3 0 0 0-5.842-.963L11 7.879zM5 6.12l4.486 4.486A3 3 0 0 1 5 8V6.121zm8.646 7.234l-12-12 .708-.708 12 12-.708.707z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <app-student-livequiz-result [studentId]="studentId" [resultQuizId]="resultQuizId"
+                        (routeBackAction)="routeBackAction($event)" [selectedQuizId]="selectedQuizId">
+                    </app-student-livequiz-result>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <window *ngIf="showPortal"></window>

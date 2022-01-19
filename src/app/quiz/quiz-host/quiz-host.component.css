@@ -1,0 +1,266 @@
+mat-card{
+  text-align: center;
+  height: 10%;
+}
+  /* answer blocks */
+  .first{
+      width: 100px;
+      height: 100px;
+      background-color: rgb(103,174,67);
+  }
+  .second{
+    width: 100px;
+    height: 100px;
+    background-color:rgb(215,18,73);
+  }
+  .third{
+    width: 100px;
+    height: 100px;
+    background-color:rgb(148, 27, 130);
+  }
+  .fourth{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(0, 146, 200);
+  }
+select::-ms-expand {	display: none; }
+select{
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+      }
+.circle{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+  margin-left: 15px;
+  background: rgb(91,196,191);
+
+}
+.style {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  max-width: 100px;
+  font-weight: bold;
+  margin-left: -5px;
+  
+  color: #fff;
+  font-size: 2.1em;
+}
+.checkmark {
+    position: absolute;
+    right: 15px;
+    height: 35px;
+    width: 35px;
+    border-color:  black;
+    border-radius: 50%;
+  }
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  .container input{
+      display: none;
+      width: 150px;
+      height: 100px;
+  }
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: green;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 14px;
+    top: 8.5px;
+    width: 8px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  label{
+    font-size: xx-large;
+    margin-top: 18px;
+    color: #ffffff;
+    padding: 12px;
+    
+  }
+  
+  .box{
+    border-style: dotted;
+    height: 200px;
+    width: 100%;
+    text-align: center;
+  }
+  .fa-caret-up{
+   font-size: 50px;
+   margin-top: -8px;
+  }
+  img{
+    width: 500px;
+    border: 0;
+    height: 400px;
+  }
+  .bi-suit-diamond-fill{
+margin-left: -5px;
+  }
+  .fa-square{
+    font-size: 30px;
+  }
+  /* responsive  */
+  @media only screen and (max-width: 600px) {
+    .lable_text{
+      font-size: 12px;
+      color: black;
+    }
+    .wrapper{
+      width: 100%;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+      height: 30vh;
+      text-align: center;
+      font-size: 8px;
+      max-height: 15vh;
+    }
+    span{
+      font-weight: 500;
+      font-size: 20px;
+      margin-top: 15px; 
+  }
+  .fa-caret-up{
+    font-size: 40px;
+    margin-left: -22px;
+    margin-top: -8px;
+
+   }
+    .fa-circle{
+    font-size: 25px;
+    margin-left: -22px;
+    margin-top: 0px;
+   }
+   .fa-square {
+    font-size: 20px;
+    margin-left: -22px;
+    margin-top: 0px;
+   }
+   .checkmark {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    height: 35px;
+    width: 35px;
+    border-color:  black;
+    border-radius: 50%;
+  }
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  .container input{
+      display: none;
+      width: 150px;
+      height: 100px;
+  }
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: green;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 14px;
+    top: 8.5px;
+    width: 8px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .circle{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    text-align: center;
+    background: gray;
+    margin-left: 15px;
+  }
+  img{
+    display: none;
+  }
+  .bi-suit-diamond-fill{
+    margin-left: -28px;
+    font-size: 25px;
+      }
+      label{
+        font-size: 15px;
+        margin-top: 18px;
+        color: #ffffff;
+        padding: 12px;
+        
+      }
+  }
+/* Extra small devices (phones, 600px and down) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+
+
+
+
+
+
+
+
+
+
+

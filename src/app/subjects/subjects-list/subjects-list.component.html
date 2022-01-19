@@ -1,0 +1,18 @@
+<app-im-alert type="danger" *ngIf="subjectslength == 0">{{subjectError}}
+</app-im-alert>
+
+<!-- <app-im-alert type="success" *ngIf="subjectslength > 0">{{subjectslength}} Subjects found</app-im-alert> -->
+<!-- <mat-spinner *ngIf="loading" [diameter]="50" class="loading"></mat-spinner> -->
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table   hover">
+    <thead>
+        <tr>
+            <th class="_text_color">{{subjectTableHead}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let subject of subjects; index as i">
+            <td style="color: black;">{{subject | titlecase }}</td>
+        </tr>
+    </tbody>
+</table>

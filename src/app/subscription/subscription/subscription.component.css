@@ -1,0 +1,19 @@
+.card{
+    overflow: hidden;
+    margin: 15px;
+}
+.sub_page{
+    overflow: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 210px)!important;
+}
+@media only screen and (max-width: 600px) {
+    .card{
+        margin-bottom: 5px;
+    }
+    .sub_page{
+        overflow: scroll;
+        overflow-x: hidden;
+        height: calc(100vh - 150px)!important;
+    }
+}

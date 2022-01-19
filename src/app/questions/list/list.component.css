@@ -1,0 +1,25 @@
+@media only screen and (max-width: 600px) {
+    ::ng-deep .my-class .modal-dialog{
+      
+      width: 100%;
+      margin: 0px!important;
+      border: none!important;
+    }
+    ::ng-deep  .modal-open .modal{
+      overflow: hidden!important;
+    }
+    .modal_control{
+      height: 100vh;
+    }
+    ::ng-deep .modal-backdrop.show{
+      opacity: 0!important;
+    }
+    ::ng-deep .modal-content{
+      border: 0px!important;
+      border-radius: 0px!important;
+    }
+}
+    ::ng-deep .my-class .modal-dialog{
+      border:  1px solid gray !important;
+    }
+   

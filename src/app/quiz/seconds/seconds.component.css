@@ -1,0 +1,112 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  .menu {
+    position: relative;
+    margin-top: 15%;
+    left: 50%;
+    width: 0px;
+    transform: translate(-50%, 55%);
+  }
+  
+  .toggle {
+    display: none;
+  }
+  .center{
+    margin-top: 25px;
+    text-align: center;
+  }
+  
+  .toggle + .style {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      display: block;
+      max-width: 100px;
+      margin-bottom: 10px;
+      background: rgb(91,196,191);
+      color: #fff;
+      font-size: 1.2em;
+      text-align: center;
+  }
+  .menu input{
+    display: none;
+  }
+  .menu label{
+      max-width: 65px;
+      text-align: center;
+      margin: 0 auto;
+      line-height: 8px;
+      
+      padding-top: 20px;
+      font-weight: 600;
+      font-size: 2em;
+  }
+  .menu input[type="radio"] + label:before {
+      content: "";
+      position: absolute;
+  }
+  .toggle:checked + .style:before, .toggle:checked + .style:after {
+    transform: rotate(135deg);
+  }
+  
+  .toggle ~ .tab {
+      position: absolute;
+      background: rgb(91,196,191);
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      left: 0px;
+      top: 0px;
+      transform: translate(-50%, -50%) scale(0);
+      transition: all 0.3s;
+      opacity: 0;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 12px;
+  }
+  input[type="radio"]:checked ~ .tab {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(1) {
+    top: -65px;
+    left: 0px;
+    transition-delay: 0s;
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(2) {
+    top: -34px;
+    left: 60px;
+    transition-delay: 0.125s;
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(3) {
+    top: 30px;
+    left: 60px;
+    transition-delay: 0.25s;
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(4) {
+    top: 69px;
+    left: 0px;
+    transition-delay: 0.375s;
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(5) {
+    top: 35px;
+    left: -60px;
+    transition-delay: 0.5s;
+  }
+  
+  .menu > input[type="radio"]:checked ~ .tab:nth-of-type(6) {
+    top: -34px;
+    left: -60px;
+    transition-delay: 0.625s;
+  }
+  

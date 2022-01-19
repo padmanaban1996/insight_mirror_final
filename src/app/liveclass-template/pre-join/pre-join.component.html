@@ -1,0 +1,11 @@
+<p>checking mic: {{hasMicrophone}}</p>
+<div class="row">
+
+    <p>checking webcam</p>
+    <webcam style=" left: 0;bottom:70px ;" height="300" mirrorImage="always">
+    </webcam>
+</div>
+<p>socket connection: {{socketInstance.ioSocket.connected}}</p>
+<button *ngIf="ConnectionChecked" (click)="onRefresh()">Refresh</button>
+<button (click)="allConnected()">Go to Class</button>
+<p>all set to true and wait for the response from this while the background is loading</p>

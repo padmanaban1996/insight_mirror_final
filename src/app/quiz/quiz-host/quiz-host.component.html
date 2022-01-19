@@ -1,0 +1,81 @@
+<mat-card>
+  <h1 style="text-align: center;">
+    {{question.title}}
+  </h1>
+
+
+</mat-card>
+
+
+<!-- time limit and answer and img block  -->
+<div class="container my-3">
+  <div class="row">
+    <div class="col">
+      <!-- <label class="lable_text">Time limit:</label>
+      <p class="circle">
+        <label class='style'>
+          <countdown class="countdown" [config]="timerObj.t1.config"></countdown>
+        </label> -->
+      <!-- </p> -->
+
+      <!-- <label class="lable_text" for="select">Answer options:</label> -->
+      <!-- <select name="options" id="select">
+  <option value="true" name="single">Single select</option>
+  <option value="false" name="multi">multi select</option> 
+  </select> -->
+    </div>
+    <div class="col">
+      <img src="assets/images/liveQuiz.jpg" alt="null">
+    </div>
+  </div>
+</div>
+
+
+<!-- answer block -->
+<div class="container-fluid">
+  <div class="row my-2">
+    <div class="col first mx-2">
+      <label class="container">
+        <i class="fa fa-caret-up" aria-hidden="true"></i>
+        {{question.a}}
+        <input type="radio" (click)="optionClick(question.a)" name="radio">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="col second mx-1">
+      <label class="container">
+        <i class="fa fa-square" aria-hidden="true"></i>
+        {{question.b}}
+        <input type="radio" (click)="optionClick(question.b)" name="radio">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col third mx-2">
+      <label class="container" for="check1id">
+        <i class="fa fa-circle" aria-hidden="true"></i>
+        {{question.c}}
+        <input type="radio" id="check1id" (click)="optionClick(question.c)" name="radio" />
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="col fourth mx-1">
+      <label class="container" for="check2id">
+        <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-suit-diamond-fill" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2.45 7.4L7.2 1.067a1 1 0 0 1 1.6 0L13.55 7.4a1 1 0 0 1 0 1.2L8.8 14.933a1 1 0 0 1-1.6 0L2.45 8.6a1 1 0 0 1 0-1.2z" />
+        </svg>
+        {{question.d}}
+        <input type="radio" id="check2id" (click)="optionClick(question.d)" name="radio" />
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <div class="div" style="display: flex; justify-content: center;">
+    <button class="btn" color="primary" (click)="onSave()">Save answer</button>
+
+  </div>
+
+</div>

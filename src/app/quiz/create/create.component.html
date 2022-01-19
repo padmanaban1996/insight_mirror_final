@@ -1,0 +1,347 @@
+<div class="overall">
+  <div class="container my-3">
+    <div class="row my-3">
+      <div class="col-6">
+        <mat-form-field class="w-100">
+          <mat-placeholder class="labelop">Enter quiz name</mat-placeholder>
+          <input type="text" matInput [(ngModel)]="quizName" autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div class="col-6 d-flex justify-content-center align-items-end">
+        <select name="questions" id="questions" class="form-select form-select-lg mb-3"
+          (change)="onSelectSubject($event.target.value)">
+          <option value="" selected disabled>Choose subject</option>
+          <option *ngFor="let subject of subjects">{{subject}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{addParticipentsLabel}}</label>
+          <div class="formGroup">
+            <label *ngFor="let class of classesList; let i = index" class="m-1">
+              <input type="checkbox" (click)="selectedClass(class._id,i)" />
+              {{class.name | titlecase}}</label>
+          </div>
+          <div class="classListBox" *ngIf="participantsSelected.length > 0">
+            <mat-chip-list class="classList" *ngFor="let participant of participantsSelected; let i = index">
+              <mat-chip class="m-2" (click)="removeItem(i)"><i class="fa fa-close p-1 "></i>
+                {{participant.name | titlecase}}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end align-items-center">
+        <div class="side-div p-2">
+          <!-- <div title="Add picture Questions" (click)="open(picMcqModal)"><i class="fa fa-picture-o"
+              aria-hidden="true"></i>
+          </div> -->
+          <div title="Add match the following Questions" (click)="open(matches)"><i class="fa fa-th-large"
+              aria-hidden="true"></i>
+          </div>
+          <div title="Add video links" (click)="addVideo()"><i class="fa fa-play-circle" aria-hidden="true"></i>
+          </div>
+          <div title="Add Questions" (click)="addQuestion()"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+          <div title="Upload Questions" (click)="uploadQuestions(questionsUpload)"><i class="fa fa-file-excel-o"
+              aria-hidden="true"></i>
+          </div>
+          <div class="" title="Delete Quiz" (click)="deleteQuiz()"><i class="fa fa-trash" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-2 d-flex align-items-center" *ngFor="let video of quizVideos; let  i = index">
+      <div class="col-10">
+        <mat-form-field class="w-100">
+          <mat-label class="labelop">Video Link {{i+1}}</mat-label>
+          <input type="text" matInput [(ngModel)]="video.video" autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <i class="fa fa-times" aria-hidden="true" (click)="deleteVideo(i)"></i>
+      </div>
+    </div>
+  </div>
+  <div class="container my-3" *ngFor="let question of quizQuestions; let  i = index">
+    <div>
+      <div class="d-flex  justify-content-center">
+        <div class="avatar-wrapper my-2" *ngIf="question.image">
+          <img class="profile-pic" [src]="question.image" />
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col-6">
+          <mat-form-field class="w-100">
+            <mat-label class="labelop">Question {{i+1}}</mat-label>
+            <input type="text" matInput [(ngModel)]="question.title" autocomplete="off">
+            <mat-icon matSuffix class="labelop">mic</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          <mat-icon matSuffix style="cursor: pointer;" class="image" title="Add image" (click)="fileUpload.click()">
+            image</mat-icon>
+          <input class="file-upload" #fileUpload type="file" accept="image/*" (change)="onFileInput($event, i)"
+            style="display: none;" />
+        </div>
+        <div class="col-4 d-flex justify-content-center align-items-end">
+          <select id="questions" class="form-select form-select-lg mb-3" [(ngModel)]="question.qtype"
+            (change)="onSelectQuestionType($event.target.value , i)">
+            <option value="" disabled>Choose Question Type</option>
+            <option value="mcq4"> &#xf05d; &ensp; MCQ (4 options)</option>
+            <option value="mcq2"> &#xf05d; &ensp;MCQ (2 options)</option>
+            <option value="blanks"> &#xf068; &ensp;Fill in the blanks</option>
+            <option value="picmcq"> &#xf03e; &ensp;Picture MCQ</option>
+            <!-- <option value="matches"> &#xf009; &ensp;Match the following</option> -->
+            <option value="comprehension"> &#xf1dd; &ensp;Paragraph question</option>
+            <option value="comprehension"> &#xf03b; &ensp;Reading comprehension questions</option>
+          </select>
+        </div>
+      </div>
+      <div *ngIf="question.qtype === 'comprehension'">
+        <div class="row mt-3">
+          <div class="col">
+            <mat-form-field class="w-100">
+              <mat-label class="labelop">Paragraph</mat-label>
+              <textarea matInput [(ngModel)]="question.paragraph"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="question.qtype === 'blanks'">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <mat-form-field class="w-100">
+            <mat-label class="labelop">Correct Answer</mat-label>
+            <input type="text" matInput autocomplete="off" [(ngModel)]="question.correctAnswer">
+          </mat-form-field>
+        </div>
+      </div>
+      <div [hidden]="(question.qtype === 'blanks' || question.qtype === 'paragraph') || question.qtype === 'picmcq'"
+        *ngIf="question.qtype != 'matches'">
+        <div class="row" [hidden]="question.qtype === 'paragraph'">
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <input type="radio" id="customcheckbox1{{i}}" class="radio1" [(ngModel)]="question.correctAnswer"
+              (click)="optionClick('a', i)" value=a>
+            <label class="label" for="customcheckbox1{{i}}">
+              <div id="tick_mark"></div>
+            </label>
+            <mat-form-field class="w-100">
+              <mat-label class="labelop">Option A</mat-label>
+              <input type="text" matInput [(ngModel)]="question.a" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <input type="radio" id="customcheckbox2{{i}}" class="radio2" [(ngModel)]="question.correctAnswer"
+              (click)="optionClick('b', i)" value=b>
+            <label class="label" for="customcheckbox2{{i}}">
+              <div id="tick_mark"></div>
+            </label>
+            <mat-form-field class="w-100">
+              <mat-label class="labelop">Option B</mat-label>
+              <input type="text" matInput [(ngModel)]="question.b" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row" [hidden]="(question.qtype === 'mcq2') || (question.qtype === 'paragraph')">
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <input type="radio" class="radio3" [(ngModel)]="question.correctAnswer" id="customcheckbox3{{i}}"
+              (click)="optionClick('c', i)" value=c>
+            <label class="label" for="customcheckbox3{{i}}">
+              <div id="tick_mark"></div>
+            </label>
+            <mat-form-field class="w-100">
+              <mat-label class="labelop">Option C</mat-label>
+              <input type="text" matInput [(ngModel)]="question.c" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <input type="radio" class="radio4" [(ngModel)]="question.correctAnswer" id="customcheckbox4{{i}}"
+              (click)="optionClick('d', i)" value=d>
+            <label class="label" for="customcheckbox4{{i}}">
+              <div id="tick_mark"></div>
+            </label>
+            <mat-form-field class="w-100">
+              <mat-label class="labelop">Option D</mat-label>
+              <input type="text" matInput [(ngModel)]="question.d" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="question.qtype === 'matches'">
+        <div class="row mt-3 mx-3">
+          <div class="col-6">
+            <div class="row"
+              *ngFor="let optionsLeft of question.matchfollow.optionLeft; let index= index;trackBy:trackByIndex;">
+              <mat-form-field class="w-100">
+                <input type="text" matInput autocomplete="off" [(ngModel)]="question.matchfollow.optionLeft[index]">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row"
+              *ngFor="let optionRight of question.matchfollow.optionRight; let index= index;trackBy:trackByIndex;">
+              <mat-form-field class="w-100">
+                <input type="text" matInput autocomplete="off" [(ngModel)]="question.matchfollow.optionRight[index]">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"
+            *ngFor="let correctAnswer of question.matchfollow.correctAnswers; let index= index;trackBy:trackByIndex;">
+            <input [(ngModel)]="correctAnswer.opt" placeholder="Correct Answer">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col"
+            *ngFor="let correctAnswer of question.matchfollow.correctAnswers; let index= index;trackBy:trackByIndex;">
+            <input [(ngModel)]="correctAnswer.ans" placeholder="Correct Answer">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="question.qtype === 'picmcq'" class="mx-3">
+        <div class="row mt-3 d-flex ">
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <div class="row d-flex justify-content-center align-items-center px-3 my-2">
+              <div class="avatar-wrapper" (click)="fileOption1.click()">
+                <img class="profile-pic" *ngIf="question.a" [src]="question.a" />
+                <i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+                <input class="file-upload" type="file" accept="image/*" style="display: none;" #fileOption1
+                  (change)="onOptionOneInput($event , i)" />
+              </div>
+              <input type="radio" name="radio{{i}}" id="checkbox1{{i}}" [(ngModel)]="question.correctAnswer"
+                class="radio1" (click)="optionClick('a', i)" value=a>
+              <label class="label" for="checkbox1{{i}}">
+                <div id="tick_mark"></div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <div class="row d-flex justify-content-center my-2">
+              <div class="avatar-wrapper" (click)="fileOption2.click()">
+                <img class="profile-pic" *ngIf="question.b" [src]="question.b" />
+                <i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+                <input class="file-upload" type="file" accept="image/*" style="display: none;"
+                  (change)="onOptionTwoInput($event, i)" #fileOption2 />
+              </div>
+              <input type="radio" name="radio{{i}}" id="checkbox2{{i}}" [(ngModel)]="question.correctAnswer"
+                class="radio2" (click)="optionClick('b', i)" value=b>
+              <label class="label" for="checkbox2{{i}}">
+                <div id="tick_mark"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-lg-5 mt-sm-0">
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <div class="row d-flex justify-content-center my-2">
+              <div class="avatar-wrapper" (click)="fileOption3.click()">
+                <img class="profile-pic" *ngIf="question.c" [src]="question.c" />
+                <i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+                <input class="file-upload" type="file" accept="image/*" style="display: none;"
+                  (change)="onOptionThreeInput($event, i)" #fileOption3 />
+              </div>
+              <input type="radio" name="radio{{i}}" id="checkbox3{{i}}" [(ngModel)]="question.correctAnswer"
+                class="radio3" (click)="optionClick('c', i)" value=c>
+              <label class="label" for="checkbox3{{i}}">
+                <div id="tick_mark"></div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+            <div class="row d-flex justify-content-center my-2">
+              <div class="avatar-wrapper" (click)="fileOption4.click()">
+                <img class="profile-pic" *ngIf="question.d" [src]="question.d" />
+                <i class="fa fa-arrow-circle-up fa-2x" aria-hidden="true"></i>
+                <input class="file-upload" type="file" accept="image/*" style="display: none;"
+                  (change)="onOptionFourInput($event, i)" #fileOption4 />
+              </div>
+              <input type="radio" name="radio{{i}}" id="checkbox4{{i}}" [(ngModel)]="question.correctAnswer"
+                class="radio4" (click)="optionClick('d', i)" value=d>
+              <label class="label" for="checkbox4{{i}}">
+                <div id="tick_mark"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="showOptions[i]">
+      <div class="row d-flex align-items-center" *ngIf="showOptions[i]">
+        <div class="col d-flex justify-content-end align-items-center">
+          <div title="Add match the following Questions" class="mr-3" (click)="open(matches)"><i class="fa fa-th-large"
+              aria-hidden="true"></i>
+          </div>
+          <div title="Add Questions" class="mr-3" (click)="addQuestion()"><i class="fa fa-plus-circle"
+              aria-hidden="true"></i></div>
+          <div title="Clone Question" class="mr-3" (click)="addQuestion()"> <i class="fa fa-clone"
+              aria-hidden="true"></i></div>
+          <div title="Delete Question" class="mr-3" (click)="deletelistQuestion(i)"><i class="fa fa-trash "
+              aria-hidden="true"></i></div>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-order my-4" style="display: flex; justify-content: center;">
+    <button class="btn py-2 px-3" title="click here to create quiz" (click)="updateQuiz(false)">
+      Save Quiz</button>
+    <!-- <button class="btn py-2 px-3 ml-3" title="click here to create quiz" (click)="updateQuiz(true)">
+      Save & Schedule Quiz</button> -->
+  </div>
+</div>
+<ng-template #picMcqModal let-modal>
+  <div class="modal_control">
+    <div class="row my-2">
+      <div class="col"></div>
+      <div class="col text-center">
+        <h2 class="m-0">Add Question</h2>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end">
+        <i class="fa fa-times mr-3" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+      </div>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <app-quiz-picture-mcq (onQuestionCreateData)="getCreatedQuestion($event)"></app-quiz-picture-mcq>
+    </div>
+  </div>
+</ng-template>
+<ng-template #matches let-modal>
+  <div class="modal_control">
+    <div class="row my-2">
+      <div class="col"></div>
+      <div class="col text-center">
+        <h2 class="m-0">Add Question</h2>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end">
+        <i class="fa fa-times mr-3" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+      </div>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <app-quiz-matches (onQuestionCreateData)="getCreatedQuestion($event)">
+      </app-quiz-matches>
+    </div>
+  </div>
+</ng-template>
+<ng-template #questionsUpload let-modal>
+  <div class="modal_block">
+    <div class="row my-2">
+      <div class="col"></div>
+      <div class="col text-center">
+        <h2 class="m-0">Upload Questions</h2>
+      </div>
+      <div class="col d-flex align-items-center justify-content-end">
+        <i class="fa fa-times mr-3" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+      </div>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <app-upload (uploadedQuestions)="uploadedQuestions($event)">
+      </app-upload>
+    </div>
+  </div>
+</ng-template>

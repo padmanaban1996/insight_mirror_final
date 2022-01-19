@@ -1,0 +1,10 @@
+<div class="row d-flex justify-content-center align-items-center">
+    <div #containerRef class="col-md-6 col-sm-12 col-lg-6 col-xl-6">
+        <ngx-charts-bar-vertical [view]="[containerRef.offsetWidth/ 1, 400]" [scheme]="colorScheme" [results]="sort"
+            [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" (select)="onSelect($event)" [showGridLines]="true"
+            (activate)="onActivate($event)">
+        </ngx-charts-bar-vertical>
+    </div>
+</div>

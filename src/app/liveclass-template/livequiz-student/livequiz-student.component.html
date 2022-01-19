@@ -1,0 +1,200 @@
+<div *ngIf="showResults == true">
+    <app-result-chart [chartData]="optionsAndFrequency"></app-result-chart>
+</div>
+<div *ngIf="(start == true || next == true ) && showResults == false">
+    <countdown [config]="config" *ngIf="seconds > 0" class="timer"></countdown>
+    <div class="overall px-2">
+        <div class="wrapper">
+            <div class="card">
+                <div class="questionCard px-3">
+                    <div class="leftOption" *ngIf="rightAnswercount <= 9 "><span
+                            class="number1">0{{rightAnswercount}}</span></div>
+                    <div class="leftOption" *ngIf="rightAnswercount >= 10 "><span
+                            class="number1">{{rightAnswercount}}</span></div>
+                    <div class="numberCircle">
+                        {{currentQuestionData.index + 1}}
+                    </div>
+                    <div class="rightOption" *ngIf="wrongAnswerCount <= 9"><span
+                            class="number2">0{{wrongAnswerCount}}</span></div>
+                    <div class="rightOption" *ngIf="wrongAnswerCount >= 10"><span
+                            class="number2">{{wrongAnswerCount}}</span></div>
+                    <div class="mt-5">
+                        <div>
+                            <p style="color: #3a8af6;" class="m-0 mt-2">Question {{currentQuestionData.index +
+                                1}}/{{currentQuestionData.totalQuestions}}</p>
+                        </div>
+                        <div class="py-3" *ngIf="currentQuestionData.qtype === 'comprehension'">
+                            <p style="text-align: justify;">{{currentQuestionData.paragraph}}</p>
+                        </div>
+                        <div class="mt-2">
+                            <img width="100px" class="image-fluid" *ngIf="currentQuestionData.image"
+                                [src]="currentQuestionData.image" class="image">
+                            <div class="py-3" [hidden]="currentQuestionData.qtype === 'comprehension'">
+                                <p style="text-align: justify;">{{currentQuestionData.title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-lg-4 px-sm-2 px-md-2 question">
+                    <div class="row px-3" *ngIf="currentQuestionData.qtype === 'comprehension'">
+                        <div class="col">
+                            <h1 style="text-align: justify; color: black">
+                                {{currentQuestionData.title}}
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row px-2"
+                        [hidden]="(currentQuestionData.qtype === 'blanks' || currentQuestionData.qtype === 'picmcq')|| currentQuestionData.qtype === 'paragraph'"
+                        *ngIf="currentQuestionData.qtype != 'matches'">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12 ">
+                            <input type="radio" name="radio" id="_radio1" value="a" [disabled]="isChecked"
+                                (click)="optionClick('a', currentQuestionData.a)" required>
+                            <label class="label_1" for="_radio1">
+                                <div id="tick_mark"></div>
+                            </label>
+                            <label for="_radio1" class="options">
+                                <p class="m-0">{{currentQuestionData.a}}</p>
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <input type="radio" name="radio" id="_radio2" value="b" [disabled]="isChecked"
+                                (click)="optionClick('b', currentQuestionData.b)" required>
+                            <label class="label_2" for="_radio2">
+                                <div id="tick_mark"></div>
+                            </label>
+                            <label for="_radio2" class="options">
+                                <p class="m-0">{{currentQuestionData.b}}</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-5 mt-sm-0 px-2" *ngIf="currentQuestionData.qtype != 'matches'"
+                        [hidden]="(currentQuestionData.qtype === 'mcq2' || currentQuestionData.qtype === 'blanks') || currentQuestionData.qtype === 'picmcq' || currentQuestionData.qtype === 'paragraph'">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <input type="radio" name="radio" id="_radio3" value="c" [disabled]="isChecked"
+                                (click)="optionClick('c', currentQuestionData.c)" required>
+                            <label class="label_3" for="_radio3">
+                                <div id="tick_mark"></div>
+                            </label>
+                            <label for="_radio3" class="options">
+                                <p class="m-0">{{currentQuestionData.c}}</p>
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                            <input type="radio" name="radio" id="_radio4" value="d" [disabled]="isChecked"
+                                (click)="optionClick('d', currentQuestionData.d)" required>
+                            <label class="label_4" for="_radio4">
+                                <div id="tick_mark"></div>
+                            </label>
+                            <label for="_radio4" class="options">
+                                <p class="m-0">{{currentQuestionData.d}}</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'blanks'">
+                        <div>
+                            <input type="text" class="option" row required placeholder="Enter the Answer"
+                                autocomplete="off" [(ngModel)]="answer" (ngModelChange)="answer = $event.toLowerCase()">
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'paragraph'">
+                        <div>
+                            <textarea type="text" class="option" row required placeholder="Enter the Answer"
+                                autocomplete="off" [(ngModel)]="answer"
+                                (ngModelChange)="answer = $event.toLowerCase()"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'picmcq'" class="mx-3">
+                        <div class="row mt-3 d-flex ">
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center align-items-center px-3 my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.a" />
+                                    </div>
+                                    <input type="radio" name="radio" id="radio1" value="a" [disabled]="isChecked"
+                                        (click)="optionClick('a', currentQuestionData.a)" [(ngModel)]="radioStatus"
+                                        [ngModelOptions]="{standalone: true}" required>
+                                    <label for="radio1" class="tickmark_label">
+                                        <div id="tick_mark"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.b" />
+                                    </div>
+                                    <input type="radio" name="radio" id="radio2" value="b" [disabled]="isChecked"
+                                        (click)="optionClick('b', currentQuestionData.b)" [(ngModel)]="radioStatus"
+                                        [ngModelOptions]="{standalone: true}" required>
+                                    <label for="radio2" class="tickmark_label">
+                                        <div id="tick_mark"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-lg-5 mt-sm-0">
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.c" />
+                                    </div>
+                                    <input type="radio" name="radio" id="radio3" value="c" [disabled]="isChecked"
+                                        [(ngModel)]="radioStatus" [ngModelOptions]="{standalone: true}"
+                                        (click)="optionClick('c', currentQuestionData.c)" required>
+                                    <label for="radio3" class="tickmark_label">
+                                        <div id="tick_mark"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.d" />
+                                    </div>
+                                    <input type="radio" name="radio" id="radio4" value="d" [disabled]="isChecked"
+                                        [(ngModel)]="radioStatus" [ngModelOptions]="{standalone: true}"
+                                        (click)="optionClick('d', currentQuestionData.d)" required>
+                                    <label for="radio4" class="tickmark_label">
+                                        <div id="tick_mark"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="currentQuestionData.qtype == 'matches'">
+                        <div class="row">
+                            <div class="col d-flex justify-content-center align-items-center cards">
+                                <div class="list-item"
+                                    *ngFor="let optionLeft of currentQuestionData.matchfollow.optionLeft; let index= index;trackBy:trackByIndex;">
+                                    <label for="item-1" id="{{currentQuestionData.matchfollow.optionLeft[index]}}"
+                                        class="labelmatch1"
+                                        [class.red]="el == currentQuestionData.matchfollow.optionLeft[index]"
+                                        (click)="doSomething($event.currentTarget)"
+                                        [class.mapped]="mappedStandardMetrics[currentQuestionData.matchfollow.optionLeft[index]]"></label>
+                                    {{currentQuestionData.matchfollow.optionLeft[index]}}
+                                </div>
+                            </div>
+                            <div class="col d-flex justify-content-center align-items-center cards">
+                                <div class="list-item"
+                                    *ngFor="let optionRight of currentQuestionData.matchfollow.optionRight; let index= index;trackBy:trackByIndex;">
+                                    <label for="alt-item-1" id="{{currentQuestionData.matchfollow.optionRight[index]}}"
+                                        class="labelmatch2"
+                                        [class.red]="el2 ==  currentQuestionData.matchfollow.optionRight[index]"
+                                        (click)="doSomething2($event.currentTarget)"
+                                        [class.mapped]="mappedFinancialModelMetrics[currentQuestionData.matchfollow.optionRight[index]]"></label>
+                                    {{currentQuestionData.matchfollow.optionRight[index]}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-3 justify-content-center">
+                    <button class="btn btn-primary"
+                        *ngIf="(currentQuestionData.qtype === 'blanks') ||(currentQuestionData.qtype === 'paragraph') ||(currentQuestionData.qtype === 'matches')"
+                        (click)="onSubmit(i)" [disabled]="answered">Submit</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

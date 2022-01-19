@@ -1,0 +1,531 @@
+.flex-container{
+    display: flex;  
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden !important;
+    position: fixed;
+    
+}
+.percentage{
+    position: absolute;
+    font-size: large;
+    color: black;
+    font-weight: bold;
+    top: 52%;
+}
+.selfVideoBox{
+    height: 300px;
+    width: 400px;
+}
+.disable{
+    pointer-events: none;
+}
+.mat_card1{
+    width: 100%; 
+    height: 100%;
+}
+
+.bottom_nav{
+    position: absolute;
+    margin: 0px;
+    bottom: 0px;
+    width: 100%;
+    /* height: 65px; */
+}
+.chat_mobile{
+    display: none !important;
+}
+.mat_card3{
+left: 0;
+width: 350px;
+height:100%;
+position: absolute;
+z-index: 1;
+}
+.msg_bubble_you{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    float: right;
+    margin: 0px;
+}
+.msg_bubble_others{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0px;
+
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+mat-icon {
+    font-size: 36px;  
+}
+ .meting_details_quiz {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    text-align: center;
+}
+.buttons_section{
+    display: flex;
+    justify-content: center;
+}
+.present_screen{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+}
+.mat_card4{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    left: 0;
+    width: 350px;
+    max-height: 50px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.logo_img{
+width: 65px;
+height: 100%;
+}
+input{
+    height: 38px;
+}
+
+
+.bi-camera-video-fill , 
+.bi-camera-video-off-fill {
+    font-size: 26px;  
+}
+
+.bi-mic-fill, .bi-mic-mute-fill{
+    font-size: 26px;
+}
+.camera , .audio {
+    font-size: 22px;
+}
+.fa-phone-slash{
+    font-size: 20px;
+}
+ 
+.fa-desktop{
+    font-size: 23px;
+}
+.fa-dot-circle-o, .fa-download{
+   
+    font-size: 23px;
+}
+
+.fa-question-circle {
+    font-size: 25px;
+ 
+}
+.fa-thumb-tack{
+    font-size: 22px;
+    margin: 0px;
+}
+.fa-comments , .fa-users, .fa-envelope{
+    font-size: 26px;
+    margin: 8px;
+    color: gray;
+}
+.fa-cog{
+    font-size: 25px;
+}
+.bi-telephone-x-fill{
+    color: red;
+    font-size: 35px;  
+}
+
+
+
+.empty_div{
+    display: none!important;
+}
+.customList {
+  height: calc(100vh - 105px);
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px;
+  margin-bottom: 5px;
+  }
+ul{
+    list-style: none;
+}
+
+  .timer{
+      color: darkgray;
+      font-size: 20px;
+      
+  }
+  /* input  */
+  .inp {
+    border:none;
+    border-bottom: 1px solid #1890ff;
+    padding: 5px 10px;
+    outline: none;
+    margin-top: 5px;
+    width: 100%;
+ }
+
+
+input:required {
+    box-shadow:none;
+}
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-width: 50px!important;
+   
+    padding: 3px!important;
+    margin: 3px!important;
+   }
+.fa-paper-plane{
+    /* position: absolute;
+    margin-top: 15px;
+    right: 0; */
+    font-size: 20px;
+}
+   
+/* model */
+.content {
+    width: 70%;
+    overflow: hidden;
+    height: auto;
+    background-color: white;
+    margin:0 auto;
+    position: fixed;
+    left: 0;
+    right:0; 
+ }
+    .mobile_menu{
+        display: none;
+    }
+    .mobile_toggle_menu{
+        display: none !important;
+    }
+
+
+   
+    .message {
+        position: relative;
+        padding: 7px 0; 
+    }
+                    
+    .message .msg-detail {
+        width: 100%;
+        display: inline-block; 
+    }
+    .message .msg-detail p {
+        margin: 0; 
+    }
+    .message .msg-detail .msg-info p {
+        font-size: .8em;
+        color: #888; 
+    }
+    .message .msg-detail .msg-content {
+        position: relative;
+        margin-top: 5px;
+        border-radius: 5px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        color: #fff;
+        width: auto;
+        max-width: 80%; 
+    }
+    .message.left .msg-content {
+        background-color: #fff;
+        color: black;
+        float: left; 
+    }
+    .message.left .msg-detail {
+        padding-left: 0px; 
+    }
+    .message.left .user-img {
+        left: 0; 
+    }
+    .message.left .msg-detail .msg-content {
+        color: #343434; 
+    }
+    
+    .message.right .msg-detail {
+    padding-right: 0px; 
+     }
+    .message.right .msg-detail .msg-info {
+        text-align: right; }
+    .message.right .user-img {
+    right: 0; 
+}
+    .message.right .msg-detail .msg-content {
+    background-color: #387ef5;
+    color: white;
+    float: right; 
+}
+.select-css {
+    display: block;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #444;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 90%;
+    max-width: 90%;
+    box-sizing: border-box;
+    margin: 15px;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+  }
+  .select-css::-ms-expand {
+    display: none;
+  }
+  
+  .select-css option {
+    font-weight:normal;
+    width: 80%;
+    max-width: 80%
+  }
+  .label_settings{
+      margin-left: 15px;
+  }
+
+  
+  .select-css:disabled:hover, .select-css[aria-disabled=true] {
+    border-color: #aaa;
+  }
+  .chat_title , .participents_title{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.logo_img_mobile{
+    display: none;
+}
+::ng-deep .live-quiz .modal-dialog{  
+    max-width: 100% !important;
+    margin: 0px!important;
+    border: none!important;
+  }
+  ::ng-deep .live-quiz-settings .modal-content{  
+    border: 3px solid #3a8af6!important;
+    border-radius: 25px !important;
+  }
+  ::ng-deep .modal .show .modal-dialog {
+     transform: none!important;
+  }
+  ::ng-deep  .modal-open .modal{
+    overflow: hidden!important;
+
+  }
+  ::ng-deep .modal-content{
+    border: none !important;
+    border-radius: 0px !important;
+  }
+  .modal_control{
+    height: 100vh;
+    overflow-y:auto;
+    padding: 8px;
+  }
+  ::ng-deep .modal-backdrop.show{
+    opacity: 0!important;
+  }
+  .results{
+    width: 100% !important;
+    height: 100vh;
+    overflow-y: scroll !important;
+position: absolute;
+top: 0;
+left: 0;
+background-color: white;
+z-index: 2;
+}
+ 
+ .call-view__controls__icon-btn {
+    height: 54px;
+    width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+    transform: scale(1);
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: all;
+    cursor: pointer;
+  }
+   .call-view__controls__icon-btn:hover {
+    height: 54px;
+    width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+    background-color: #e4e1e1;
+    border-radius: 50%;
+    pointer-events: all;
+    cursor: pointer;
+  }
+  .call-view__controls__icon-btn.important {
+    background-color: #FF3346;
+  }
+   .call-view__controls__icon-btn.important i {
+    font-size: 32px;
+  } 
+ 
+/* Extra small devices (phones, 680px and down) */
+ @media only screen and (max-width: 680px) {
+  
+    .mobile_menu{
+        display: inline ;
+        position: absolute;
+        right: 15px;
+        bottom: 30px;   
+    }
+    ::ng-deep .live-quiz-settings .modal-dialog{
+        width: 100%;
+        margin: 0px!important;
+        border: none!important;
+      }
+      ::ng-deep  .modal-open .modal{
+        overflow: hidden!important;
+      }
+      .modal_control_settings{
+        height: 100vh;
+      }
+      ::ng-deep .modal-backdrop.show{
+        opacity: 0!important;
+      }
+      ::ng-deep .live-quiz-settings .modal-content{  
+        border: 0px !important;
+        border-radius: 0px !important;
+      }
+    .chat_mobile{
+        display: inline !important;
+        position: absolute;
+        left: 15px;
+        bottom: 30px;
+    }
+    .logo_img_mobile{
+        display: inline;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+    }
+   
+    .img_mobile{
+        height: 50px;
+    }
+    .test:after {
+        content: '\2807';
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        }
+    .mobile_toggle_menu{
+        display: flex !important;
+        justify-content: flex-start;
+        flex-direction: column;
+        position: absolute;
+        right: 0px;
+        bottom: 85px;
+        background-color:white ;
+        line-height: 25px;
+        width: 100%;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
+    .logo_img{
+        width: 40px;
+        height: 100%;
+        }
+    .bottom_nav{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        bottom: 0px;
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        z-index: 0;
+    }
+    .mat_card3{
+        left: 0;
+        width: 100%;
+        height:100%;
+        position: absolute;
+        z-index: 1;
+        
+        }
+    .fa-bars{
+      width: 5px;
+    }
+      .fa-users, .fa-camera , .fa-envelope{
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0px;
+        color: black !important;
+    }
+    .fa-comments{
+        font-size: 24px;
+        cursor: pointer;
+        margin: 0px;
+
+    }
+    .meting_details_quiz {
+        display: none!important;
+    }
+    .present_screen {
+        display: none!important;
+    }
+    .fa-question-circle ,.fa-cog{
+        font-size: 20px;
+        margin-top: 2px;
+    }
+    
+    .mat_card4{
+       display: none !important;
+    }
+    ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+        min-width: 40px!important;
+         height: 25px!important;
+        padding: 0px!important;
+        margin: 0px!important;
+       }
+       p{
+        font-size: 16px; 
+        margin: 0px 0px 0px;
+    }
+    .timer{
+      font-size:12px;
+      color: black;
+    }
+  .inp {
+    border:none;
+    border-bottom: 1px solid #1890ff;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+ }
+}

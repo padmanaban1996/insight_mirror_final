@@ -1,0 +1,20 @@
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table">
+
+  <thead>
+    <tr>
+      <th scope="col">
+        <h4 class="text-center text-white m-0">Questions</h4>
+      </th>
+      <th scope="col">
+        <h4 class="text-center text-white m-0">Correct Answer</h4>
+      </th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let item of Quizquestions">
+    <tr *ngFor="let data of item.questions">
+      <td>{{data.title | capitalizeFirst}}</td>
+      <td>{{data.correctAnswer}}</td>
+    </tr>
+
+  </tbody>
+</table>

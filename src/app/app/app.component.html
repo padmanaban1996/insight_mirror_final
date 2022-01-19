@@ -1,0 +1,22 @@
+<div class="container-fluid" style="height:100vh; bottom: 0px; display: flex; flex-direction:column;">
+   <div class="row navbar p-3">
+      <mat-card class="_overall_mat_card topnav_matcard">
+         <app-top-bar></app-top-bar>
+         <hr>
+      </mat-card>
+
+   </div>
+
+   <div class="row content">
+      <div class="col-lg-2 col-md-3 sidenav_col">
+         <mat-card class="side_nav _overall_mat_card">
+            <app-nav-bar class="mt-4"></app-nav-bar>
+         </mat-card>
+      </div>
+      <div class="col mobile_scroll">
+         <mat-card class="_overall_mat_card mobile_outlet">
+            <router-outlet></router-outlet>
+         </mat-card>
+      </div>
+   </div>
+</div>

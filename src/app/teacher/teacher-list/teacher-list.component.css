@@ -1,0 +1,35 @@
+.teachers{
+  margin-top: 10px;
+}
+::ng-deep .teacher-upload .modal-content{  
+  border: 3px solid #3a8af6!important;
+  border-radius: 25px !important;
+}
+@media only screen and (max-width: 600px) {
+
+  ::ng-deep .teacher-upload .modal-dialog{
+    
+    width: 100%;
+    margin: 0px!important;
+    border: none!important;
+  }
+  ::ng-deep  .modal-open .modal{
+    overflow: hidden!important;
+  }
+  .modal_control{
+    height: 100vh;
+  }
+  ::ng-deep .modal-backdrop.show{
+    opacity: 0!important;
+  }
+  ::ng-deep .teacher-upload .modal-content{  
+    border: 0px !important;
+    border-radius: 0px !important;
+  }
+    .teachers{
+      overflow: scroll;
+    overflow-x: hidden;
+      height: calc(100vh - 100px)!important;
+    
+}
+}

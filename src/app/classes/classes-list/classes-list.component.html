@@ -1,0 +1,21 @@
+<!-- make below alert as common static dummy component which can be resused in any list -->
+<app-im-alert type="danger" *ngIf="classeslength == 0 ">{{classError}}</app-im-alert>
+<!-- <app-im-alert type="success" *ngIf="classeslength >0 ">{{classeslength}}
+    Classes found</app-im-alert> -->
+
+<mat-spinner *ngIf="loading == true && classeslength == null" [diameter]="50" class="loading">
+</mat-spinner>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table   hover">
+    <thead>
+        <tr>
+            <th>
+                <h2 class="text-center text-white m-0">{{classTableHead}}</h2>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let class of classes; index as i">
+            <td style="color: black;">{{class.name | titlecase}}</td>
+        </tr>
+    </tbody>
+</table>

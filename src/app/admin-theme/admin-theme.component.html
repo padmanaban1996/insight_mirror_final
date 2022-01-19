@@ -1,0 +1,14 @@
+<!-- <div class="main-div">
+    <mat-card>
+        <div class="btn-group">
+            <button mat-fab (click)="toggleDarktheme()">Dark</button>
+            <button mat-fab color="black" (click)="toggleLighttheme()">Light</button>
+        </div>
+    </mat-card>
+</div> -->
+<div class="main-div justify-content-center align-items-center">
+    <i class="fa fa-sun-o" aria-hidden="true" title="Light Mode"></i>
+    <mat-slide-toggle [checked]="useDefault" (change)="toggle($event)" class="toggle_button">
+    </mat-slide-toggle>
+    <i class="fa fa-moon-o" aria-hidden="true" title="Dark Mode"></i>
+</div>

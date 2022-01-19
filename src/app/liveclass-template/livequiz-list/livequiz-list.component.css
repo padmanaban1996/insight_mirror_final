@@ -1,0 +1,47 @@
+.fa-check{
+    font-size: 16px;
+}
+.search-wrapper {
+    border-radius: 20px;
+    background-color: var(--search-area-bg);
+    padding-right: 12px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    color: var(--light-font);
+    box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    overflow: hidden;
+  }
+  .remove-border-bottom ::ng-deep .mat-tab-header {
+    border-bottom: none;
+  }
+  ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-width: 50px!important;
+    padding: 0px!important;
+    margin-left: 13px!important;
+    background-color: none !important;
+   }
+   
+  .search-input {
+    border: none;
+    flex: 1;
+    outline: none;
+    height: 100%;
+    padding: 0 20px;
+    font-size: 16px;
+    background-color: var(--search-area-bg);
+    color: var(--main-color);
+  }
+  .search-input:placeholder {
+    color: var(--main-color);
+    opacity: 0.6;
+  }
+@media only screen and (max-width : 600px){
+    .m-3 {
+        margin: 0.5rem !important;
+    }
+}
+

@@ -1,0 +1,123 @@
+
+button {
+    margin: 10px;
+}
+.white-board {
+    width: 100%;
+    height: 90vh;
+    /* background: #fff; */
+    overflow: hidden;
+  }
+  .tools {
+    position: relative;
+    width: 100%;
+    opacity: 0.1;
+    
+    transition: opacity 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .tools > * {
+    margin-bottom: 10px;
+  }
+  .tools button {
+    display: inline-block;
+    padding: 8px 16px 0;
+    margin-right: 5px;
+    background: #348AA7;
+    border: none;
+    outline: none;
+    color: white;
+    border-radius: 3px;
+    box-shadow: 0 5px 0px #348aa7;
+    border-bottom: 2px solid transparent;
+  }
+  .tools button:hover {
+    background: #2e7a94;
+    box-shadow: 0 4px 1px #2e7a94;
+    transition: all 0.1s ease-in;
+  }
+  .tools button:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  .tools .color-input {
+    display: none;
+  }
+  .tools .color-label {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  .tools .size-dropdown {
+    position: relative;
+  }
+  .tools .dropdown {
+    position: absolute;
+    bottom: 50%;
+    left: 0px;
+    opacity: 0;
+    min-width: 12em;
+    overflow: hidden;
+    display: none;
+    cursor: pointer;
+    outline: none;
+    border: 0.06em solid transparent;
+    border-radius: 1em;
+    background-color: #c5dbe0;
+    transition: 0.3s all ease-in-out;
+  }
+  .tools .dropdown .dropdown-item {
+    border-top: 0.06em solid #d9d9d9;
+    display: block;
+    height: 2em;
+    line-height: 2em;
+    padding-left: 1em;
+    padding-right: 3em;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s color ease-in-out;
+  }
+  .tools .dropdown .dropdown-item.selected {
+    background-color: #348AA7;
+  }
+  .tools .dropdown .dropdown-item.selected line {
+    stroke: #fff !important;
+  }
+  .tools .dropdown.active {
+    border: 0.06em solid #166E84;
+    background: #fff;
+    border-radius: 0.25em;
+    padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 5px 0px;
+    max-height: 15em;
+    opacity: 1;
+    display: inline-block;
+  }
+  .tools .dropdown.active .dropdown-item {
+    border-top: 0.06em solid #d9d9d9;
+  }
+  .tools .dropdown.active .dropdown-item:hover line {
+    stroke: #166E84 !important;
+  }
+  .tools:hover {
+    opacity: 1;
+  }
+  input[type=submit]{
+    -webkit-appearance: button;
+  }
+  @media only screen and (max-width: 600px) {
+    .white-board {
+      width: 100%;
+      height: 80vh;
+      background: #fff;
+      overflow: hidden;
+    } 
+  }

@@ -1,0 +1,85 @@
+<div class="wrapper _text_color">
+   <div class="sidebar">
+      <div class="bg_shadow"></div>
+      <div class="sidebar__inner">
+
+         <ul class="siderbar_menu _text_color">
+            <li *ngIf="role ==  'admin'" class="nav_item">
+               <a class="s-sidebar__nav-link _text_color" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}" [routerLink]="dashboardRoute">
+
+                  <em><i class="fa fa-bar-chart" aria-hidden="true"></i>Dashboard</em>
+
+               </a>
+            </li>
+            <!-- <li *ngIf="role ==  'teacher'" class="nav_item">
+               <a class="s-sidebar__nav-link _text_color" routerLinkActive="active" routerLink="questions/list">
+                  <em><i class="fa fa-question-circle" aria-hidden="true"></i>Questions</em>
+               </a>
+            </li> -->
+            <!--  -->
+            <li [hidden]="role == 'student'" routerLinkActive="active" class="nav_item">
+               <a class="s-sidebar__nav-link _text_color" routerLink="quiz/list">
+
+                  <em><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Quiz</em>
+               </a>
+            </li>
+
+
+            <li class="nav_item">
+               <a class="s-sidebar__nav-link _text_color" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}" routerLink="schedule/list">
+                  <em> <i class="fa fa-camera"></i>Schedule</em>
+               </a>
+            </li>
+            <!--   
+       <li>
+          <a class="s-sidebar__nav-link" routerLink="">
+             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+             <em>Exam</em>
+          </a>
+       </li> -->
+
+            <li class="nav_item" *ngIf="role ==  'admin'">
+               <a class="s-sidebar__nav-link _text_color" routerLinkActive="active"
+                  [routerLinkActiveOptions]="{exact: true}" routerLink="settings/page">
+
+                  <em><i class="fa fa-cog" aria-hidden="true"></i>Settings</em>
+
+               </a>
+            </li>
+
+            <li class="nav_item">
+               <a class="s-sidebar__nav-link _text_color" (click)="logOut()">
+
+                  <em><i class="fas fa-sign-out-alt"></i>Logout</em>
+               </a>
+            </li>
+
+            <!-- <li *ngIf="role ==  'admin'">
+               <a class="s-sidebar__nav-link" routerLinkActive="active" routerLink="student/list">
+                  <i class="fa fa-upload" aria-hidden="true"></i>
+                  <em>Students</em>
+               </a>
+            </li> -->
+
+
+
+
+
+         </ul>
+
+      </div>
+
+      <div class="social_media" *ngIf="hideDiv">
+         <small>Powered by</small>
+         <img class="logo_white" src="/assets/images/fevicon.png">
+         <!-- <img class="logo_white" src="/assets/images/iquizlogo.JPG"> -->
+      </div>
+      <div class="social_media" *ngIf="!hideDiv">
+         <small>Powered by</small>
+         <img class="logo_dark" src="/assets/images/Logo 2.png">
+         <!-- <img class="logi_dark" src="/assets/images/iquizlogo.JPG"> -->
+      </div>
+   </div>
+</div>

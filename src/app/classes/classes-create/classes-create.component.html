@@ -1,0 +1,19 @@
+<div class="main-div _text_color">
+    <!-- in future version shift the below code to classess create and think of reusing the classess create component  -->
+    <form [formGroup]="classesCreateForm">
+        <!-- <div *ngIf="f.name.invalid
+        && f.name.errors" class="alert alert-danger">{{classCreateError}}</div> -->
+        <div class="form-group">
+            <div class="col-sm-12">
+                <label for="classess_name" class="control-label required">{{classNameLabel}}</label>
+                <input type="text" id="classess_name" class="form-control" formControlName="name" required
+                    appCheckFormFieldValidity>
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button class="btn" (click)="onSubmit()"
+                [disabled]="classesCreateForm.invalid">{{classSubmitButton}}</button>
+        </div>
+    </form>
+</div>

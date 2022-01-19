@@ -1,0 +1,25 @@
+<div class="_overall_mat_card_inner _text_color subjects">
+    <div>
+        <a class="float" (click)="open(content2)">
+            <i class="fa fa-plus my-float"></i>
+        </a>
+    </div>
+    <div>
+        <app-subjects-list class="classListItem" [refresh_subjects]="refresh_subjects"></app-subjects-list>
+    </div>
+</div>
+
+<!-- create new subjects modal -->
+<ng-template #content2 let-modal>
+    <div class="modal_control">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{subjectCreateTitle}}</h4>
+            <!-- <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"> -->
+            <i class="fa fa-times" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+
+        </div>
+        <div class="modal-body">
+            <app-subjects-create (refresh_subjects)="onSaveDataRefreshSubjects($event)"></app-subjects-create>
+        </div>
+    </div>
+</ng-template>

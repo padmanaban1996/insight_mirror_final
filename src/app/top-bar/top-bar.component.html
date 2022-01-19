@@ -1,0 +1,130 @@
+<nav class="navbar">
+  <div class="row" style="display: flex; align-items: center; margin:0px; width: 100%; justify-content: space-between;">
+    <i class="fa fa-bars" aria-hidden="true" (click)="opensideNav()">
+    </i>
+    <h1 class="mat-h1 m-0">Insight Mirror</h1>
+    <span class="user _text_color" (click)="showlModel = !showlModel" style="cursor: pointer;">
+      <span class="user_name ">{{userName | shortName}}</span></span>
+  </div>
+</nav>
+<!-- large screen user profile -->
+<div class="lg_profile" *ngIf="showlModel">
+  <div class="d-flex justify-content-center align-items-center py-4">
+    <div>
+      <span class="user _text_color" (click)="showlModel = !showlModel" style="cursor: pointer;">
+        <span class="user_name ">{{userName | shortName}}</span></span>
+    </div>
+  </div>
+  <hr class="m-0">
+  <div class="row py-3  _text_color" style="flex-direction: column;">
+    <h1 class="_text_color name text-center">{{userName | titlecase}}</h1>
+    <h3 class=" name text-center text-muted">{{email}}</h3>
+    <h1 class="_text_color">{{schoolName | titlecase}}</h1>
+  </div>
+  <hr class="m-0">
+  <div>
+    <div class="row text-center justify-content-center py-4">
+      <div>
+        <app-admin-theme></app-admin-theme>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- side nav content -->
+<div *ngIf="showDiv" class="mobile_sidenav">
+  <div class="row no-gutters">
+    <div class="col">
+      <div class="wrapper">
+        <div class="school_name">
+          <div class="row mt-4 align-items-center justify-content-center">
+            <span class="user_mobile _text_color">
+              <span class="user_name ">{{userName | shortName}}</span></span>
+          </div>
+          <div class="row mt-2">
+            <div class="col align-items-center justify-content-center">
+              <h1 class="_text_color name">{{userName}}</h1>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col text-center">
+              <h2 class="_text_color" [ngModel]>{{schoolName}}</h2>
+            </div>
+            <!-- <div class="col mt-2">
+              <i class="fa fa-caret-up  _text_color" *ngIf="!showMode" (click)="showMode = !showMode"></i>
+              <i class="fa fa-caret-down  _text_color" *ngIf="showMode" (click)="showMode = !showMode"></i>
+            </div> -->
+          </div>
+        </div>
+        <hr>
+        <div>
+          <div class="row text-center justify-content-center">
+            <div>
+              <app-admin-theme></app-admin-theme>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div class="sidebar__inner">
+          <ul class="siderbar_menu">
+            <li *ngIf="role ==  'admin'">
+              <a class="s-sidebar__nav-link" routerLinkActive="active" [routerLink]="dashboardRoute"
+                (click)="showDiv = !showDiv">
+
+                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                <em>Dashboard</em>
+              </a>
+            </li>
+            <li>
+              <a [hidden]="role == 'student'" class="s-sidebar__nav-link" routerLinkActive="active"
+                routerLink="quiz/list" (click)="showDiv = !showDiv">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                <em>Quiz</em>
+              </a>
+            </li>
+
+            <li>
+              <a class="s-sidebar__nav-link" routerLinkActive="active" routerLink="schedule/list"
+                (click)="showDiv = !showDiv">
+                <i class="fa fa-camera"></i><em>Schedule</em>
+              </a>
+            </li>
+
+            <li *ngIf="role ==  'admin'">
+              <a class="s-sidebar__nav-link" routerLinkActive="active" routerLink="settings/page"
+                (click)="showDiv = !showDiv">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <em>Settings</em>
+              </a>
+            </li>
+            <li>
+              <a class="s-sidebar__nav-link" (click)="logOut()">
+                <i class="fas fa-sign-out-alt"></i>
+                <em>Logout</em>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="social_media" *ngIf="hideDiv">
+
+          <small class="_text_color">Powered by</small>
+
+          <img src="/assets/images/fevicon.png">
+          <!-- <img src="/assets/images/iquizlogo.JPG"> -->
+
+        </div>
+        <div class="social_media" *ngIf="!hideDiv">
+
+          <small class="_text_color">Powered by</small>
+          <img src="/assets/images/Logo 2.png">
+          <!-- <img src="/assets/images/iquizlogo.JPG"> -->
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="opasitive" (click)="showDiv = !showDiv">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+<div class="row" style="display: flex; justify-content: center; align-items: center; flex-direction: column;"
+    [hidden]="start">
+    <div class="mb-2">
+        <button class="btn" (click)="action('start')">Start</button>
+    </div>
+    <div class="text-center">
+        <div>
+            <mat-slide-toggle (change)="change($event)">Auto Play!</mat-slide-toggle><br>
+            <label *ngIf="showSeconds">Seconds For Every Question</label><br>
+            <select *ngIf="showSeconds" (change)="select($event)">
+                <option value="0" disabled selected>Choose Sec</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select><br>
+            <button *ngIf="showSeconds" class="btn mt-2" (click)="action('autoplay')"
+                [disabled]="autoPlay">AutoPlay</button>
+        </div>
+    </div>
+</div>
+<div *ngIf="start">
+    <div class="overall px-2">
+        <div class="wrapper">
+            <div class="card">
+                <div class="questionCard px-3">
+                    <div class="numberCircle">
+                        {{currentQuestionData.index + 1}}
+                    </div>
+                    <div class="mt-5">
+                        <div>
+                            <p style="color: #3a8af6;" class="m-0 mt-2">Question {{currentQuestionData.index +
+                                1}}/{{currentQuestionData.totalQuestions}}</p>
+                        </div>
+                        <div class="py-3" *ngIf="currentQuestionData.qtype === 'comprehension'">
+                            <p style="text-align: justify;">{{currentQuestionData.paragraph}}</p>
+                        </div>
+                        <div class="mt-2">
+                            <img width="100px" class="image-fluid" *ngIf="currentQuestionData.image"
+                                [src]="currentQuestionData.image" class="image">
+                            <div class="py-3" [hidden]="currentQuestionData.qtype === 'comprehension'">
+                                <p style="text-align: justify;">{{currentQuestionData.title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-lg-4 px-sm-2 px-md-2 question">
+                    <div class="row px-3" *ngIf="currentQuestionData.qtype === 'comprehension'">
+                        <div class="col">
+                            <h1 style="text-align: justify; color: black">
+                                {{currentQuestionData.title}}
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row px-2"
+                        [hidden]="(currentQuestionData.qtype === 'blanks' || currentQuestionData.qtype === 'picmcq') || currentQuestionData.qtype === 'paragraph'"
+                        *ngIf="currentQuestionData.qtype != 'matches'">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12 ">
+
+                            <label for="_radio1" class="options">
+                                <p class="m-0">{{currentQuestionData.a}}</p>
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+
+                            <label for="_radio2" class="options">
+                                <p class="m-0">{{currentQuestionData.b}}</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-5 mt-sm-0 px-2" *ngIf="currentQuestionData.qtype != 'matches'"
+                        [hidden]="(currentQuestionData.qtype === 'mcq2' || currentQuestionData.qtype === 'blanks')  || currentQuestionData.qtype === 'picmcq'|| currentQuestionData.qtype === 'paragraph'">
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+
+                            <label for="_radio3" class="options">
+                                <p class="m-0">{{currentQuestionData.c}}</p>
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+
+                            <label for="_radio4" class="options">
+                                <p class="m-0">{{currentQuestionData.d}}</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'blanks'">
+                        <div>
+                            <input type="text" class="option" row required placeholder="Enter the Answer"
+                                autocomplete="off" [(ngModel)]="currentQuestionData.correctAnswer">
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'paragraph'">
+                        <div>
+                            <textarea type="text" class="option" row required placeholder="Enter the Answer"
+                                autocomplete="off" [(ngModel)]="currentQuestionData.correctAnswer"></textarea>
+                        </div>
+                    </div>
+                    <div *ngIf="currentQuestionData.qtype === 'picmcq'" class="mx-3">
+                        <div class="row mt-3 d-flex ">
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center align-items-center px-3 my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.a" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.b" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-lg-5 mt-sm-0">
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.c" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xs-12">
+                                <div class="row d-flex justify-content-center my-2">
+                                    <div class="avatar-wrapper">
+                                        <img class="profile-pic" [src]="currentQuestionData.d" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col justify-content-center text-center align-items-center">
+                            <p>{{teacherParticipentsAnswered}}</p>
+                            <p>{{noOfAnsweredStudents}}</p>
+                        </div>
+                        <div class="col justify-content-center align-items-center text-center">
+                            <button class="btn" (click)="keysFuction()">Show Answer</button>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center" style="flex-direction: column;">
+                        <!-- show result to student -->
+                        <div>
+                            <button class="btn ml-2" *ngIf="!lastQuestion" (click)="action('showResults')">Show
+                                Result</button>
+                            <button class="btn ml-2" *ngIf="!lastQuestion" [hidden]="autoPlay"
+                                (click)="action('next')">Next</button>
+                            <button class="btn ml-2" (click)="action('end')">End</button>
+                        </div>
+                    </div>
+                    <div *ngIf="showAnswer" style="overflow:auto; width:100%;position:relative;">
+                        <table datatable [dtOptions]="dtOptions" class="display nowrap test table">
+                            <thead style="position: inherit;">
+                                <tr>
+                                    <th>Name</th>
+                                    <th
+                                        *ngFor="let header of _object.keys(studentsAnswers[0].answerSheet); let i=index">
+                                        Q){{i+1}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let student of studentsAnswers; let i = index">
+                                    <td>{{ student.name }}</td>
+                                    <td
+                                        *ngFor="let objKey of _object.keys(studentsAnswers[i].answerSheet); let j=index">
+                                        {{ studentsAnswers[i].answerSheet[objKey].answer|| 'Did not Answer' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

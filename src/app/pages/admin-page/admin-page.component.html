@@ -1,0 +1,29 @@
+<div class="_overall_mat_card_inner _text_color admins">
+    <div>
+        <a class="float" (click)="open(content3)">
+            <i class="fa fa-plus my-float"></i>
+        </a>
+    </div>
+    <div>
+        <app-admin-list class="classListItem" [refresh_admins]="refresh_admins"></app-admin-list>
+    </div>
+</div>
+
+<ng-template #content3 let-modal>
+    <div class="modal_control">
+        <div class="row my-3">
+            <div class="col"></div>
+            <div class="col text-center">
+                <h2 class="m-0" id="modal-basic-title">{{adminCreateTitle}}</h2>
+            </div>
+            <div class="col d-flex justify-content-end align-items-center">
+                <i class="fa fa-times mr-3" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+            </div>
+        </div>
+        <hr>
+        <div class="modal-body">
+            <app-admin-create [schoolId]="schoolId" (refresh_admins)="onSaveDataRefreshAdmins($event)">
+            </app-admin-create>
+        </div>
+    </div>
+</ng-template>

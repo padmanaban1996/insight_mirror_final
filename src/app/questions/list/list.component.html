@@ -1,0 +1,47 @@
+<div class="row heading _text_color">
+  <div class="col-6">
+    <h1>Questions</h1>
+  </div>
+  <div class="col-6">
+    <!-- <button class="btn" color="accent" (click)="openAddNewQuestions()">Add New question</button> -->
+    <button class="btn" color="primary" (click)="open(content)"><i class="fa fa-upload" aria-hidden="true"></i>
+      Upload</button>
+  </div>
+</div>
+
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table   hover">
+  <thead>
+    <tr>
+      <th class="_text_color">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of questions; index as i">
+      <td style="color: black; cursor: pointer;">{{item.title |titlecase }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- modal ui -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Question Bulk Upload</h4>
+    <i class="fa fa-times" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+
+  </div>
+  <div class="modal-body">
+    <app-upload></app-upload>
+  </div>
+</ng-template>
+
+<!-- single question modal ui -->
+
+<ng-template #singleQuestionModal let-modal>
+
+  <div class="modal-body">
+    <app-single-question [id]='selectedid' (modalClose)="modalClose($event )">
+
+    </app-single-question>
+  </div>
+</ng-template>
