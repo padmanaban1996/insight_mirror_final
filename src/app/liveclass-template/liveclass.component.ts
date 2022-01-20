@@ -152,6 +152,8 @@ export class LiveclassComponent {
   studentmodalReference: any;
   selectedQuizId: any;
   extra: number;
+  isScreenShare: boolean = false;
+  isSettings: boolean = false;
   @HostListener('window:focus', ['$event'])
   onFocus(event: any): void {
     console.log("Page active");
@@ -372,6 +374,7 @@ export class LiveclassComponent {
     this.api.on('screenSharingStatusChanged', (data: any) => {
       console.log("screen share", data);
       if (data.on == null) {
+        this.isScreenShare = false
         this.sendMessage("hideFilmStrip", '', this.schedule._id)
       }
       if (data.on == true) {
@@ -815,6 +818,7 @@ export class LiveclassComponent {
   }
   toggleScreenShare() {
     console.log("clicked");
+    this.isScreenShare = true;
     this.api.executeCommand('toggleShareScreen');
   }
   requestToggleScreenShare(participantId: string) {
@@ -1125,6 +1129,7 @@ export class LiveclassComponent {
     this.modalService.open(content, { ariaLabelledBy: 'New Class', windowClass: 'live-quiz' })
   }
   opensettings(content) {
+    this.isSettings = !this.isSettings;
     this.getAvailableDevices()
     this.modalService.open(content, { ariaLabelledBy: 'New Class', windowClass: 'live-quiz-settings', centered: true })
   }
@@ -1492,6 +1497,7 @@ export class LiveclassComponent {
   }
   errorCallback(error) {
     console.log(error);
+    this.isRecording = !this.isRecording
   }
   stopRecording() {
     this.isRecording = !this.isRecording

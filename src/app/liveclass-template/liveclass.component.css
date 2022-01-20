@@ -126,7 +126,9 @@ input{
    
     font-size: 23px;
 }
-
+.fa-chalkboard-teacher{
+    font-size: 23px;
+}
 .fa-question-circle {
     font-size: 25px;
  
@@ -390,6 +392,12 @@ z-index: 2;
   } 
  
 /* Extra small devices (phones, 680px and down) */
+.present_screen .active *{
+    color:#76ba1b;
+}
+.meting_details_quiz .active *{
+    color:#76ba1b;
+}
  @media only screen and (max-width: 680px) {
   
     .mobile_menu{
@@ -528,4 +536,10 @@ z-index: 2;
     outline: none;
     width: 100%;
  }
+}
+ .icons-wrap i,  .icons-wrap p{
+    transition: all 0.3s ease-in-out;
+}
+ .icons-wrap:hover i, .icons-wrap:hover p{
+    color:#76ba1b;
 }

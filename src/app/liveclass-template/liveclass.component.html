@@ -13,11 +13,11 @@
     <mat-card class="mat_card4" id="topWrapper">
         <img class="logo_img" src="/assets/images/Logo.png" alt="logo">
         <ul class="nav nav-tabs">
-            <li (click)="openChat()"><a><i class=" fa fa-comments" aria-hidden="true"></i>
+            <li class="icons-wrap" (click)="openChat()"><a><i class=" fa fa-comments" aria-hidden="true"></i>
                     <i *ngIf="showChat == false && updatedMessageLength > messageLength" class=" fa fa-circle"
                         style="top:-15px;right:5px; position: relative;; color: red; font-size: 12px;"></i></a>
             </li>
-            <li (click)="openParticipents()"><a> <i class=" fa fa-users" aria-hidden="true"></i></a>
+            <li class="icons-wrap" (click)="openParticipents()"><a> <i class=" fa fa-users" aria-hidden="true"></i></a>
             </li>
             <li *ngIf="user.role == 'student'" (click)="toggleQuizResult()"><a> <i class="fa fa-envelope"
                         aria-hidden="true"></i>
@@ -247,7 +247,8 @@
             <li *ngIf="user.role == 'teacher'">
                 <hr>
                 <div style="cursor: pointer;">
-                    <div class="row" *ngIf="!isHostVideoPinned" (click)="pinHostVideo()">
+                    <div class="row" *ngIf="!isHostVideoPinned" (click)="pinHostVideo()"
+                        [class.active]="!isHostVideoPinned">
                         <div class="col-1">
                             <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                         </div>
@@ -255,7 +256,8 @@
                             <p>Pin</p>
                         </div>
                     </div>
-                    <div class="row" *ngIf="isHostVideoPinned" (click)="unPinHostVideo()">
+                    <div class="row" *ngIf="isHostVideoPinned" (click)="unPinHostVideo()"
+                        [class.active]="isHostVideoPinned">
                         <div class="col-1">
                             <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                         </div>
@@ -287,21 +289,24 @@
             <div class="col meting_details_quiz ">
                 <div class="row">
                     <div class="col" style="width: 100px;">
-                        <div (click)="open(quizlistContent)" style="cursor: pointer;" *ngIf="user.role == 'teacher'">
+                        <div (click)="open(quizlistContent)" style="cursor: pointer;" class="icons-wrap"
+                            *ngIf="user.role == 'teacher'">
                             <i class="fa fa-question-circle" aria-hidden="true" title="Quiz"></i>
                             <p class="m-0">{{quizLabel}}</p>
                         </div>
                     </div>
                     <div class="col" style="width: 100px;">
-                        <div style="cursor: pointer;" (click)="opensettings(settingModal)">
+                        <div style="cursor: pointer;" class="icons-wrap" (click)="opensettings(settingModal)"
+                            [class.active]="isSettings">
                             <i class="fa fa-cog" aria-hidden="true"></i>
                             <p class="m-0">{{settingsLabel}}</p>
                         </div>
                     </div>
                     <div class="col" style="width: 100px;">
-                        <div (click)="showAllQuizResults()" style="cursor: pointer;" *ngIf="user.role == 'teacher'">
-                            <i class="fa fa-file-text" aria-hidden="true" title="Quiz Results" style=" font-size: 25px;
-                                color: #343434;"></i>
+                        <div (click)="showAllQuizResults()" style="cursor: pointer;" class="icons-wrap"
+                            *ngIf="user.role == 'teacher'">
+                            <i class="fa fa-file-text" aria-hidden="true" title="Quiz Results"
+                                style=" font-size: 25px;"></i>
                             <p style="cursor: pointer;" *ngIf="!showAllQuizResultsToStudents" class="m-0">Results</p>
                             <p style="cursor: pointer;" *ngIf="showAllQuizResultsToStudents" class="m-0">Hide</p>
                         </div>
@@ -338,41 +343,47 @@
             <div class="col present_screen">
                 <div class="row">
                     <div class="col" style="position: relative; width: 100px;" *ngIf="user.role == 'teacher'">
-                        <div style="cursor: pointer;" *ngIf="!isHostVideoPinned" (click)="unPinHostVideo()">
+                        <div style="cursor: pointer;" class="icons-wrap" *ngIf="!isHostVideoPinned"
+                            (click)="unPinHostVideo()">
                             <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                             <p class="m-0"> Pin</p>
                         </div>
-                        <div style="cursor: pointer;" *ngIf="isHostVideoPinned" (click)="pinHostVideo()">
+                        <div style="cursor: pointer;" class="icons-wrap" *ngIf="isHostVideoPinned"
+                            (click)="pinHostVideo()" [class.active]="isHostVideoPinned">
                             <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                             <p class="m-0">Unpin</p>
                         </div>
                     </div>
                     <div class="col" style="width: 100px;" *ngIf="user.role == 'teacher'">
-                        <div (click)="toggleScreenShare()" style="cursor: pointer;">
+                        <div (click)="toggleScreenShare()" style="cursor: pointer;" class="icons-wrap"
+                            [class.active]="isScreenShare">
                             <i class="fa fa-desktop" aria-hidden="true" title="Present screen"></i>
                             <p class="m-0">Screen</p>
                         </div>
                     </div>
                     <div class="col" *ngIf="user.role == 'student'">
                         <div (click)="(disableParticipantScreenShareButton) ? '' : requestToggleScreenShare(userId)"
-                            style="cursor: pointer;">
+                            [class.active]="disableParticipantScreenShareButton" style="cursor: pointer;"
+                            class="icons-wrap">
                             <i class="fa fa-desktop" aria-hidden="true" title="Present screen"></i>
                             <p class="m-0">Screen</p>
                         </div>
                     </div>
                     <div class="col" style="width: 100px;">
-                        <div (click)="onClick()" style="cursor: pointer;" title="Whiteboard" class="white_board"
-                            *ngIf="user.role == 'teacher'">
-                            <img src="/assets/images/WhiteBoard.png" style="width: 25px; height: 25px;">
+                        <div (click)="onClick()" style="cursor: pointer;" title="Whiteboard"
+                            class="white_board icons-wrap" *ngIf="user.role == 'teacher'">
+                            <i class="fas fa-chalkboard-teacher" aria-hidden="true" title="Whiteboard"></i>
                             <p class="m-0">{{whiteboardLabel}}</p>
                         </div>
                     </div>
                     <div class="col" style="width: 100px;">
-                        <div style="cursor: pointer;" *ngIf="!isRecording" (click)="startRecording()">
+                        <div style="cursor: pointer;" class="icons-wrap" *ngIf="!isRecording"
+                            (click)="startRecording()">
                             <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
                             <p class="m-0">Record</p>
                         </div>
-                        <div style="cursor: pointer;" *ngIf="isRecording" (click)="stopRecording()">
+                        <div style="cursor: pointer;" class="icons-wrap" *ngIf="isRecording" (click)="stopRecording()"
+                            [class.active]="isRecording">
                             <i class="fa fa-download" aria-hidden="true"></i>
                             <p class="m-0">Download</p>
                         </div>
@@ -485,7 +496,8 @@
         <div class="modal_control_settings">
             <div class="modal-header w-100 text-center">
                 <h2 class="modal-title" id="modal-basic-title">Settings</h2>
-                <i class="fa fa-times" aria-hidden="true" (click)="modal.dismiss('Cross click')"></i>
+                <i class="fa fa-times" aria-hidden="true" (click)="isSettings = false"
+                    (click)="modal.dismiss('Cross click')"></i>
             </div>
             <div class="modal-body">
                 <div class="row">
